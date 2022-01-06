@@ -23,15 +23,15 @@
 ---
 
 ### 2) **Lógica principal do jogo**
-> #### **Level Up** <br> 
+> ### **Level Up** <br> 
 > Responsável pela verificação e chamada dos níveis.
 
-> #### **Movimentação do Good Square** <br> 
+> ### **Movimentação do Good Square** <br> 
 > Responsável pela movimentação do Good Square. <br> 
 > > Critério de parada:
 > - Verificação com a linha de chegada;
 
-> #### **Movimentação dos Evil's Squares** <br> 
+> ### **Movimentação dos Evil's Squares** <br> 
 > Responsável pela movimentação do Evil Square. <br> 
 > > Critério de parada:
 > - Verificação de colisão com o Good Square;
@@ -41,14 +41,14 @@
 >   - Verificação da linha (Y);
 >   - Verificação da coluna (X);
 
-> #### **Game Over** <br> 
+> ### **Game Over** <br> 
 > Responsável pela impressão da tela de Game Over, perguntando se o usuário deseja jogar novamente.<br> 
 > > Opção 1 (jogar novamente):
 > - Volta para a função main;
 > > Opção 2 (sair do jogo):
 > - Chama a função EndGame;
 
-> #### **End Game** <br> 
+> ### **End Game** <br> 
 > Responsável por exibir as estatísticas da partida.<br> 
 
 ---

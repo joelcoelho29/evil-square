@@ -1,7 +1,7 @@
 #!/bin/sh
 
-./montador SquareZero.asm SquareZero.mif
-./sim SquareZero.mif charmap.mif
+./montador EvilSquare.asm EvilSquare.mif
+./sim EvilSquare.mif charmap.mif
 
 
 

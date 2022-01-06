@@ -1,3 +1,5 @@
+Esse projeto foi desenvolvido para a disciplina de Organização de Computadores
+
 # **Funções Evil Square**
 ## 1) **Inicialização**
 

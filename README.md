@@ -1,4 +1,12 @@
-Esse projeto foi desenvolvido para a disciplina de Organização de Computadores
+
+# **Evil Square**
+## **Descrição**
+> Fuja de soldados ao longo dos corredores do castelo de um Rei insano. <br> Este é um jogo singleplayer desenvolvido em assembly.
+> <br>
+
+
+> ## **Como Jogar**
+> Após inserir seu Nickname e dar Start no jogo, use as teclas WASD para se esquivar dos Evil's Square's e chegue até a linha de chegada! Conforme você for subindo de nível, novos oponentes surgirão e ficará mais difícil de vencer o jogo! Caso você não consiga se esquivar de um Evil Square, você perderá o jogo! Mas calme, é só apertar a tecla de jogar novamente que o jogo reinicia! <br>
 
 # **Funções Evil Square**
 ## 1) **Inicialização**
@@ -66,3 +74,4 @@ Esse projeto foi desenvolvido para a disciplina de Organização de Computadores
 > - Quanto maior o valor, mais devagar as movimentações.
 
 ---
+## **Esse projeto foi desenvolvido para a disciplina de Organização de Computadores Digitais (ICMC - USP)**

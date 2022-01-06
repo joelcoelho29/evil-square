@@ -8,8 +8,8 @@
 ## **Como Jogar**
 > Após inserir seu Nickname e dar Start no jogo, use as teclas WASD para se esquivar dos Evil's Square's e chegue até a linha de chegada! Conforme você for subindo de nível, novos oponentes surgirão e ficará mais difícil de vencer o jogo! Caso você não consiga se esquivar de um Evil Square, você perderá o jogo! Mas calme, é só apertar a tecla de jogar novamente que o jogo reinicia! <br>
 
-# **Funções Evil Square**
-## 1) **Inicialização**
+## **Especificações Técnicas**
+### 1) **Inicialização**
 
 > ### **Main** <br> 
 > Responsável pela inicialização de variáveis estáticas e chamada das funções principais. 
@@ -22,16 +22,16 @@
 
 ---
 
-## 2) **Lógica principal do jogo**
-> ### **Level Up** <br> 
+### 2) **Lógica principal do jogo**
+> #### **Level Up** <br> 
 > Responsável pela verificação e chamada dos níveis.
 
-> ### **Movimentação do Good Square** <br> 
+> #### **Movimentação do Good Square** <br> 
 > Responsável pela movimentação do Good Square. <br> 
 > > Critério de parada:
 > - Verificação com a linha de chegada;
 
-> ### **Movimentação dos Evil's Squares** <br> 
+> #### **Movimentação dos Evil's Squares** <br> 
 > Responsável pela movimentação do Evil Square. <br> 
 > > Critério de parada:
 > - Verificação de colisão com o Good Square;
@@ -42,21 +42,21 @@
 >   - Verificação da linha (Y);
 >   - Verificação da coluna (X);
 
-> ### **Game Over** <br> 
+> #### **Game Over** <br> 
 > Responsável pela impressão da tela de Game Over, perguntando se o usuário deseja jogar novamente.<br> 
 > > Opção 1 (jogar novamente):
 > - Volta para a função main;
 > > Opção 2 (sair do jogo):
 > - Chama a função EndGame;
 
-> ### **End Game** <br> 
+> #### **End Game** <br> 
 > Responsável por exibir as estatísticas da partida.<br> 
 
 ---
 
-## **Observações de implementação:**
+### **Observações de implementação:**
 
-> ### **Delay** <br> 
+> #### **Delay** <br> 
 > Tal função é responsável por fazer a interação entre o usuário e o jogo. Entretanto, é importante ressaltar que os valores implementados podem variar de ambiente para ambiente.  
 > É provável que em sua máquina o jogo não rode corretamente, uma vez que os clocks do seu processador podem rodar em uma frequência superior (ou inferior)  à implementada. <br>
 > Logo, é necessário adequá-la para seu computador. <br>

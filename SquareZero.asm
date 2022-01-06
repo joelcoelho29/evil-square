@@ -169,10 +169,6 @@ LevelUp:
 	push r0
 	push r1
 	push r2
-	
-	loadn r1, #5									; Valor do nível
-	cmp r0, r1										; Faz a comparação entre o Level (R0) e o R1 verificando se é o level que o mesmo apresenta  
-	jeq Level5
 
 	loadn r1, #1									; Valor do nível
 	cmp r0, r1										; Faz a comparação entre o Level (R0) e o R1 verificando se é o level que o mesmo apresenta  
@@ -181,9 +177,11 @@ LevelUp:
 	load r0, Level									; Salva o valor do Level no R0
 	loadn r2, #1									; Atualiza a variavel Level
 	add r0, r0, r2
-	store Level, r0		
-
-	call LevelUpTransition
+	store Level, r0
+	
+	loadn r1, #6
+	cmp r0, r1
+	cne LevelUpTransition		
 	
 	loadn r1, #2									; Valor do nível
 	cmp r0, r1										; Faz a comparação entre o Level (R0) e o R1 verificando se é o level que o mesmo apresenta  
@@ -196,6 +194,10 @@ LevelUp:
 	loadn r1, #4									; Valor do nível
 	cmp r0, r1										; Faz a comparação entre o Level (R0) e o R1 verificando se é o level que o mesmo apresenta  
 	jeq Level4
+	
+	loadn r1, #5									; Valor do nível
+	cmp r0, r1										; Faz a comparação entre o Level (R0) e o R1 verificando se é o level que o mesmo apresenta  
+	jeq Level5
 	
 	call Win										; Se fez todas as comparações (até o 5) e não entrou em nenhum LVL é porque ganhou o jogo
 

@@ -35,7 +35,6 @@
 > Responsável pela movimentação do Evil Square. <br> 
 > > Critério de parada:
 > - Verificação de colisão com o Good Square;
-<br>
 > > Cálculo de movimentação:
 > - Movimenta-se na vertical, horizontal ou diagonais.
 > - Verificação da posição de acordo com as coordenadas (x, y) do Good Square:

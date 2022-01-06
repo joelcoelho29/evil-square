@@ -55,7 +55,7 @@
 
 ### **Observações de implementação:**
 
-> #### **Delay** <br> 
+> ### **Delay** <br> 
 > Tal função é responsável por fazer a interação entre o usuário e o jogo. Entretanto, é importante ressaltar que os valores implementados podem variar de ambiente para ambiente.  
 > É provável que em sua máquina o jogo não rode corretamente, uma vez que os clocks do seu processador podem rodar em uma frequência superior (ou inferior)  à implementada. <br>
 > Logo, é necessário adequá-la para seu computador. <br>

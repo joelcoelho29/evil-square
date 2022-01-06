@@ -28,54 +28,45 @@ positionPreviousGoodSquare: var #1
 
 positionEvilSquare1: var #1
 positionPreviousEvilSquare1: var #1
-EvilSquareLastMove: var #4
+EvilSquareLastMove: var #1
 EvilSquareLastOperationMove: var #1
 
 positionEvilSquare2: var #1
 positionPreviousEvilSquare2: var #1
-EvilSquareLastMove2: var #4
+EvilSquareLastMove2: var #1
 EvilSquareLastOperationMove2: var #1
 
 positionEvilSquare3: var #1
 positionPreviousEvilSquare3: var #1
-EvilSquareLastMove3: var #4
+EvilSquareLastMove3: var #1
 EvilSquareLastOperationMove3: var #1
 
 positionEvilSquare4: var #1
 positionPreviousEvilSquare4: var #1
-EvilSquareLastMove4: var #4
+EvilSquareLastMove4: var #1
 EvilSquareLastOperationMove4: var #1
 
 positionEvilSquare5: var #1
 positionPreviousEvilSquare5: var #1
-EvilSquareLastMove5: var #4
+EvilSquareLastMove5: var #1
 EvilSquareLastOperationMove5: var #1
 
 
 ; String's
-InsertString: string "Insert your Nickname"
 Nickname: var #27
-
 LevelString: string "Level "
-LevelUpString: string "Level UP"
-
-WelcomeString1: string "Welcome"
-
-GameOverString1: string "G A M E   O V E R"
-GameOverString2: string "Do you want to play again? <y/n>"
-
 ThanksString: string "Thanks for playing"
 
 ; Auxiliares
 Level: var #1
 Option: var #1
-PalavraSize: var #1									; Tamanho do Nickname
+WordSize: var #1									; Tamanho do Nickname
 Letter: var #1
 
-MOVE_VERTICAL: var #4
-MOVE_LEFT_DIAGONAL: var #4
-MOVE_RIGHT_DIAGONAL: var #4
-MOVE_HORIZONTAL: var #4
+MOVE_VERTICAL: var #1
+MOVE_LEFT_DIAGONAL: var #1
+MOVE_RIGHT_DIAGONAL: var #1
+MOVE_HORIZONTAL: var #1
 
 ;------------------------------------------------------------------
 
@@ -94,14 +85,13 @@ main:
 	store MOVE_HORIZONTAL, r0
 
 	loadn r0, #0
-	store PalavraSize, r0
+	store WordSize, r0
 
 	loadn r0, #1
-	store Level, r0									; Guarda o Level
+	store Level, r0									; Guarda o Level (precisa inicializar com 1 pois ele desenha o cenário em seguida)
 
 	call InitializeVariables
 	call menu
-	; call Story
 
 	call DrawScenery
 	jmp LevelUp
@@ -117,16 +107,16 @@ menu:
 	push r2
 	call EraseScreen
 
-	loadn r1, #StartScreen1Line0
-	loadn r2, #0 
+	loadn r1, #StartScreen1Line0					; Guarda a primeira posição da tela a ser impressa
+	loadn r2, #0 									; Guarda a cor da tela a ser impressa
 	call PrintScreenMenu
 
-	loadn r1, #StartScreen2Line0
-	loadn r2, #2816 
+	loadn r1, #StartScreen2Line0					; Guarda a primeira posição da tela a ser impressa
+	loadn r2, #2816 								; Guarda a cor da tela a ser impressa
 	call PrintScreenMenu
 
-	loadn r1, #StartScreen3Line0
-	loadn r2, #2304 
+	loadn r1, #StartScreen3Line0					; Guarda a primeira posição da tela a ser impressa
+	loadn r2, #2304 								; Guarda a cor da tela a ser impressa
 	call PrintScreenMenu
 	
 	call InputNickname
@@ -134,83 +124,6 @@ menu:
 	pop r2
 	pop r1
 	rts
-
-;--------------------------------------------------------
-
-;********************************************************
-;                       HISTORIA
-;********************************************************	
-Story:
-	push r0
-	push r1
-	push r2
-	push r3
-
-	loadn r3, #9
-	call EraseScreen
-
-	; Rotina de impressão da história part 1
-	loadn r1, #StoryScreen1Line0
-	loadn r2, #0 
-	call PrintScreenStory
-
-	; Rotina de impressão do castelo
-	loadn r1, #StoryScreen2Line0
-	loadn r2, #2048
-	call PrintScreenStory
-
-	; Rotina de impressão dos personagens
-	call PrintPerson
-
-	CountStory:
-		call Time
-		dec r3
-		jnz CountStory
-
-	call EraseScreen
-
-	; Rotina de impressão da história part 2 e da cena do Rei dando a sentença
-	;loadn r1, #StoryScreen3Line0
-	;loadn r2, #0 
-	;call PrintScreenStory
-
-	; Rotina de impressão da cena do GoodSquare sendo preso
-	;loadn r1, #StoryScreen4Line0
-	;loadn r2, #2816
-	;call PrintScreenStory
-
-
-	pop r3
-	pop r2
-	pop r1
-	pop r0
-	rts
-
-;--------------------------------------------------------
-
-;********************************************************
-;              IMPRESSÃO DOS PERSONAGENS
-;********************************************************		
-PrintPerson:
-	push r0
-	push r1
-
-	loadn r0, #1174									
-	loadn r1, #1661								; Soma o codigo ascii do soldado com a cor TEAL
-	outchar r1, r0
-
-	loadn r0, #1058									
-	loadn r1, #1661								; Soma o codigo ascii do soldado com a cor TEAL
-	outchar r1, r0
-
-	loadn r0, #1136									
-	loadn r1, #'!'								; Soma o codigo ascii do GoodSquare com a cor X
-	outchar r1, r0
-	
-	pop r1
-	pop r0
-	rts
-
 ;--------------------------------------------------------
 
 
@@ -225,9 +138,23 @@ InitializeVariables:
 	
 	loadn r0, #159
 	store positionEvilSquare1, r0					; Guarda posição EvilSquare1
+	store positionPreviousEvilSquare1, r0
 	
-	loadn r0, #59
+	loadn r0, #139
 	store positionEvilSquare2, r0					; Guarda posição EvilSquare2
+	store positionPreviousEvilSquare2, r0
+	
+	loadn r0, #1119
+	store positionEvilSquare3, r0					; Guarda posição EvilSquare3
+	store positionPreviousEvilSquare3, r0
+	
+	loadn r0, #1081
+	store positionEvilSquare4, r0					; Guarda posição EvilSquare4
+	store positionPreviousEvilSquare4, r0
+	
+	loadn r0, #600
+	store positionEvilSquare5, r0					; Guarda posição EvilSquare4
+	store positionPreviousEvilSquare5, r0
 	
 	pop r0
 	rts
@@ -242,46 +169,36 @@ LevelUp:
 	push r0
 	push r1
 	push r2
-	push r3
-	push r4
-	push r5
-	push r6
-	push r7
 
-	loadn r1, #1
-	cmp r0, r1
+	loadn r1, #1									; Valor do nível
+	cmp r0, r1										; Faz a comparação entre o Level (R0) e o R1 verificando se é o level que o mesmo apresenta  
 	jeq Level1
-
-	loadn r2, #1									; Atualiza a variavel Level
-	load r0, Level
-	add r0, r0, r2
-	store Level, r0
-
-	call LevelUpAnimation
 	
-	loadn r1, #2
-	cmp r0, r1
+	load r0, Level									; Salva o valor do Level no R0
+	loadn r2, #1									; Atualiza a variavel Level
+	add r0, r0, r2
+	store Level, r0		
+
+	call LevelUpTransition
+	
+	loadn r1, #2									; Valor do nível
+	cmp r0, r1										; Faz a comparação entre o Level (R0) e o R1 verificando se é o level que o mesmo apresenta  
 	jeq Level2
 
-	loadn r1, #3
-	cmp r0, r1
+	loadn r1, #3									; Valor do nível
+	cmp r0, r1										; Faz a comparação entre o Level (R0) e o R1 verificando se é o level que o mesmo apresenta  
 	jeq Level3
 
-	loadn r1, #4
-	cmp r0, r1
+	loadn r1, #4									; Valor do nível
+	cmp r0, r1										; Faz a comparação entre o Level (R0) e o R1 verificando se é o level que o mesmo apresenta  
 	jeq Level4
 	
-	loadn r1, #5
-	cmp r0, r1
+	loadn r1, #5									; Valor do nível
+	cmp r0, r1										; Faz a comparação entre o Level (R0) e o R1 verificando se é o level que o mesmo apresenta  
 	jeq Level5
 
-	jmp Win
+	call Win										; Se fez todas as comparações (até o 5) e não entrou em nenhum LVL é porque ganhou o jogo
 
-	pop r7
-	pop r6
-	pop r5
-	pop r4
-	pop r3
 	pop r2
 	pop r1
 	pop r0
@@ -291,32 +208,28 @@ LevelUp:
 
 
 ;********************************************************
-;                  ANIMAÇÃO DO LEVEL UP
+;                  TRANSIÇÃO DO LEVEL UP
 ;********************************************************
-LevelUpAnimation:
-	push r0
+LevelUpTransition:
 	push r1
 	push r2
 	
 	call InitializeVariables
-
 	call EraseScreen
 
-	loadn r1, #LevelUpScreen1Line0
-	loadn r2, #0 
+	loadn r1, #LevelUpScreen1Line0					; Guarda a primeira posição da tela a ser impressa
+	loadn r2, #0 									; Guarda a cor a ser impressa 
 	call PrintScreenLevelUp
 
-	loadn r1, #LevelUpScreen2Line0
-	loadn r2, #2816 
+	loadn r1, #LevelUpScreen2Line0					; Guarda a primeira posição da tela a ser impressa
+	loadn r2, #2816  								; Guarda a cor a ser impressa
 	call PrintScreenLevelUp
 
 	call Time
-
 	call DrawScenery
 	
 	pop r2
 	pop r1
-	pop r0
 	rts
 
 ;--------------------------------------------------------
@@ -344,7 +257,7 @@ Win:
 	call PrintScreenWinGame
 	
 	; Aqui fazemos um delay para dar tempo do usuário ler o que está escrito na tela
-
+	
 	loadn r3, #4
 
 	Looping:
@@ -394,7 +307,7 @@ Level2:
 Level3:
 	call MovementEvilSquare1
 	call MovementEvilSquare2
-	;call MovementEvilSquare3
+	call MovementEvilSquare3
 	call MovementGoodSquare
 	call Delay
 	jmp Level3
@@ -402,8 +315,8 @@ Level3:
 Level4:
 	call MovementEvilSquare1
 	call MovementEvilSquare2
-	;call MovementEvilSquare3
-	;call MovementEvilSquare4
+	call MovementEvilSquare3
+	call MovementEvilSquare4
 	call MovementGoodSquare
 	call Delay
 	jmp Level4
@@ -411,12 +324,11 @@ Level4:
 Level5:
 	call MovementEvilSquare1
 	call MovementEvilSquare2
-	;call MovementEvilSquare3
-	;call MovementEvilSquare4
-	;call MovementEvilSquare5
+	call MovementEvilSquare3
+	call MovementEvilSquare4
+	call MovementEvilSquare5
 	call MovementGoodSquare
 	call Delay
-
 	jmp Level5
 
 ;--------------------------------------------------------
@@ -429,31 +341,27 @@ MovementGoodSquare:
 	push r0
 	push r1
 	push r3
-	push r4
 	
-	loadn r3, #80
-
 	call MovementGoodSquare_RECALC					; Recalcula Posicao do GoodSquare
 
-	load r0, positionGoodSquare						; So' Apaga e Redesenha se (position != positionPrevious)
-	cmp r0, r3
+	load r0, positionGoodSquare						; Posição do GoodSquare
+	loadn r3, #80									; Valor da linha de chegada (duas primeiras linhas)
+	cmp r0, r3											
+	jle LevelUp										; Se o R0 for menor que o R3, significa que ele chegou na linha de chegada							
 	
-	jle LevelUp
-	
-	load r1, positionPreviousGoodSquare	
-		
-	cmp r0, r1
-	jeq Skip
+	load r1, positionPreviousGoodSquare				
+	cmp r0, r1										; Faz a comparação entre a posição atual e a posição anterior
+	jeq Skip										; Se as posições forem iguais, ele não se moveu, então não precisa desenhar os bonecos
 	
 	call DeletePreviousGoodSquareDraw
 	call DrawGoodSquare
   
   	Skip:
-	  	pop r4
-		pop	r3
-		pop r1
-		pop r0
-		rts
+	
+	pop	r3
+	pop r1
+	pop r0
+	rts
 
 ;--------------------------------------------------------
 
@@ -471,23 +379,23 @@ MovementGoodSquare_RECALC:							; Recalcula posicao do GoodSquare em funcao das
 	
 	inchar r1										; Le Teclado para controlar a GoodSquare
 	loadn r2, #'a'
-	cmp r1, r2
+	cmp r1, r2										; Compara a letra inserida com a letra 'a'
 	jeq MovementGoodSquare_RECALC_A
 	
 	loadn r2, #'d'
-	cmp r1, r2
+	cmp r1, r2										; Compara a letra inserida com a letra 'd'
 	jeq MovementGoodSquare_RECALC_D
 		
 	loadn r2, #'w'
-	cmp r1, r2
+	cmp r1, r2										; Compara a letra inserida com a letra 'w'
 	jeq MovementGoodSquare_RECALC_W
 		
 	loadn r2, #'s'
-	cmp r1, r2
+	cmp r1, r2										; Compara a letra inserida com a letra 's'
 	jeq MovementGoodSquare_RECALC_S
 	
 	
-  MovementGoodSquare_RECALC_Fim:					; Se nao for nenhuma tecla valida, vai embora
+  MovementGoodSquare_RECALC_END:					; Se não foi inserido nenhuma tecla, retorna para a função de movimentação geral do GoodSquare
 	store positionGoodSquare, r0
 	pop r3
 	pop r2
@@ -500,36 +408,36 @@ MovementGoodSquare_RECALC:							; Recalcula posicao do GoodSquare em funcao das
 	loadn r2, #0
 	mod r1, r0, r1									; Testa condicoes de Contorno 
 	cmp r1, r2
-	jeq MovementGoodSquare_RECALC_Fim
+	jeq MovementGoodSquare_RECALC_END
 	dec r0											; pos = pos -1
-	jmp MovementGoodSquare_RECALC_Fim
+	jmp MovementGoodSquare_RECALC_END
 		
   MovementGoodSquare_RECALC_D:						; Move GoodSquare para Direita	
 	loadn r1, #40
 	loadn r2, #39
 	mod r1, r0, r1									; Testa condicoes de Contorno 
 	cmp r1, r2
-	jeq MovementGoodSquare_RECALC_Fim
+	jeq MovementGoodSquare_RECALC_END
 	inc r0											; pos = pos + 1
-	jmp MovementGoodSquare_RECALC_Fim
+	jmp MovementGoodSquare_RECALC_END
 	
   MovementGoodSquare_RECALC_W:						; Move GoodSquare para Cima
 	loadn r1, #40
 	cmp r0, r1										; Testa condicoes de Contorno 
-	jle MovementGoodSquare_RECALC_Fim
+	jle MovementGoodSquare_RECALC_END
 	sub r0, r0, r1									; pos = pos - 40
-	jmp MovementGoodSquare_RECALC_Fim
+	jmp MovementGoodSquare_RECALC_END
 
   MovementGoodSquare_RECALC_S:						; Move GoodSquare para Baixo
 	loadn r1, #1159
 	cmp r0, r1										; Testa condicoes de Contorno 
-	jgr MovementGoodSquare_RECALC_Fim
+	jgr MovementGoodSquare_RECALC_END
 	loadn r2, #1079
 	cmp r0, r2										; Testa condicoes de Contorno
-	jgr MovementGoodSquare_RECALC_Fim
+	jgr MovementGoodSquare_RECALC_END
 	loadn r1, #40
 	add r0, r0, r1									; pos = pos + 40
-	jmp MovementGoodSquare_RECALC_Fim
+	jmp MovementGoodSquare_RECALC_END
 
 ;--------------------------------------------------------
 
@@ -714,7 +622,6 @@ MovementEvilSquare1:
 	;--------------------------
 	
 	MoveEvilBasedOnLastMove: 
-		; breakp
 		load r7, EvilSquareLastOperationMove		; 1 significa que decrementou e 0 significa incrementou 
 		loadn r6, #1
 		cmp r7, r6									; compara a ultima operação com 1 para ver se decrementou
@@ -722,28 +629,29 @@ MovementEvilSquare1:
 
 		jmp ADDMoveEvilBasedOnLastMove
 
-	ADDMoveEvilBasedOnLastMove:
+	ADDMoveEvilBasedOnLastMove:						; Adiciona EvilSquareLastMove a posição atual do EvilSquare
 		load r7, EvilSquareLastMove
 		add r0, r0, r7
 		loadn r6, #0
 		jmp DrawEvilSquare1
 
-	SUBTRACTMoveEvilBasedOnLastMove:
+	SUBTRACTMoveEvilBasedOnLastMove:				; Subtrai EvilSquareLastMove da posição atual do EvilSquare
 		load r7, EvilSquareLastMove
 		sub r0, r0, r7
 		loadn r6, #1
 		jmp DrawEvilSquare1
 
 	DrawEvilSquare1:
+		store EvilSquareLastMove, r7				; Salva na memória a ultima movimentação do EvilSquare
+		store EvilSquareLastOperationMove, r6		; Salva na memória a ultima operação de movimentação do EvilSquare
+		
+		load r6, positionPreviousEvilSquare1			
 		call DeletePreviousEvilSquareDraw
-
+		
 		cmp r1, r0
 		jeq GameOver
 		
-		store positionEvilSquare1, r0
-		store EvilSquareLastMove, r7
-		store EvilSquareLastOperationMove, r6
-		
+		store positionEvilSquare1, r0				; Salva na memória a atual movimentação do EvilSquare
 		loadn r1, #2337								; Char do EvilSquare 
 		outchar r1, r0								; Desenha Char
 	
@@ -763,7 +671,6 @@ MovementEvilSquare1:
 ;********************************************************
 ;               MOVIMENTAÇÃO DO EVIL SQUARE 2
 ;********************************************************	
-
 
 MovementEvilSquare2:
 	push r0
@@ -942,7 +849,6 @@ MovementEvilSquare2:
 	;--------------------------
 	
 	MoveEvilBasedOnLastMove2: 
-		; breakp
 		load r7, EvilSquareLastOperationMove2		; 1 significa que decrementou e 0 significa incrementou 
 		loadn r6, #1
 		cmp r7, r6									; compara a ultima operação com 1 para ver se decrementou
@@ -950,28 +856,29 @@ MovementEvilSquare2:
 
 		jmp ADDMoveEvilBasedOnLastMove2
 
-	ADDMoveEvilBasedOnLastMove2:
+	ADDMoveEvilBasedOnLastMove2:					; Adiciona EvilSquareLastMove2 a posição atual do EvilSquare2				    
 		load r7, EvilSquareLastMove2
 		add r0, r0, r7
 		loadn r6, #0
 		jmp DrawEvilSquare2
 
-	SUBTRACTMoveEvilBasedOnLastMove2:
+	SUBTRACTMoveEvilBasedOnLastMove2:				; Subtrai EvilSquareLastMove2 da posição atual do EvilSquare2
 		load r7, EvilSquareLastMove2
 		sub r0, r0, r7
 		loadn r6, #1
 		jmp DrawEvilSquare2
 
-	DrawEvilSquare2:
-		call DeletePreviousEvilSquareDraw2
+	DrawEvilSquare2:			
+		store EvilSquareLastMove2, r7				; Salva na memória a ultima movimentação do EvilSquare2
+		store EvilSquareLastOperationMove2, r6		; Salva na memória a ultima operação de movimentação do EvilSquare2
+	
+		load r6, positionPreviousEvilSquare2			
+		call DeletePreviousEvilSquareDraw
 
 		cmp r1, r0
 		jeq GameOver
 		
-		store positionEvilSquare2, r0
-		store EvilSquareLastMove2, r7
-		store EvilSquareLastOperationMove2, r6
-		
+		store positionEvilSquare2, r0				; Salva na memória a atual movimentação do EvilSquare2
 		loadn r1, #2337								; Char do EvilSquare 
 		outchar r1, r0								; Desenha Char
 	
@@ -1049,7 +956,7 @@ MovementEvilSquare3:
 		cmp r2, r4									; compara x do evil com o x do good
 		jgr EvilRightGood3
 
-		jmp EvilLeftGood2
+		jmp EvilLeftGood3
 	
 	EvilAboveRightDiagonalGood3:
 		loadn r6, #3
@@ -1178,28 +1085,29 @@ MovementEvilSquare3:
 
 		jmp ADDMoveEvilBasedOnLastMove3
 
-	ADDMoveEvilBasedOnLastMove3:
+	ADDMoveEvilBasedOnLastMove3:					; Adiciona EvilSquareLastMove3 a posição atual do EvilSquare3
 		load r7, EvilSquareLastMove3
 		add r0, r0, r7
 		loadn r6, #0
 		jmp DrawEvilSquare3
 
-	SUBTRACTMoveEvilBasedOnLastMove3:
+	SUBTRACTMoveEvilBasedOnLastMove3:				; Subtrai EvilSquareLastMove3 da posição atual do EvilSquare3
 		load r7, EvilSquareLastMove3
 		sub r0, r0, r7
 		loadn r6, #1
 		jmp DrawEvilSquare3
 
 	DrawEvilSquare3:
-		call DeletePreviousEvilSquareDraw3
+		store EvilSquareLastMove3, r7				; Salva na memória a ultima movimentação do EvilSquare3
+		store EvilSquareLastOperationMove3, r6      ; Salva na memória a ultima operação de movimentação do EvilSquare3
+	
+		load r6, positionPreviousEvilSquare3		; R0 = posAnt
+		call DeletePreviousEvilSquareDraw
 
 		cmp r1, r0
 		jeq GameOver
 		
-		store positionEvilSquare3, r0
-		store EvilSquareLastMove3, r7
-		store EvilSquareLastOperationMove3, r6
-		
+		store positionEvilSquare3, r0				; Salva na memória a atual movimentação do EvilSquare3
 		loadn r1, #2337								; Char do EvilSquare 
 		outchar r1, r0								; Desenha Char
 	
@@ -1215,6 +1123,461 @@ MovementEvilSquare3:
 
 ;--------------------------------------------------------
 
+;********************************************************
+;               MOVIMENTAÇÃO DO EVIL SQUARE 4
+;********************************************************	
+
+
+MovementEvilSquare4:
+	push r0
+	push r1
+	push r2
+	push r3
+	push r4
+	push r5
+	push r6
+	push r7
+
+	load r0, positionEvilSquare4
+	store positionPreviousEvilSquare4, r0 
+	loadn r1, #' '									; Char em branco para apagar o EvilSquare
+	outchar r1, r0									; Apaga o EvilSquare
+
+	loadn r7, #40
+	mod r2, r0, r7									; pega a posicao x do evil square
+	div r3, r0, r7									; pega a posicao y do evil square
+
+	load r1, positionGoodSquare						; Criterio de parada
+
+	mod r4, r1, r7									; pega a posicao x do good square
+	div r5, r1, r7									; pega a posicao y do good square
+	
+	; Lógica para ver qual vai ser a movimentação do evil square
+
+	cmp r3, r5										; compara y do evil com o y do good
+	jle EvilAboveGood4
+	
+	cmp r3, r5										; compara y do evil com o y do good
+	jgr EvilBelowGood4
+
+	jmp EvilEqualGoodInRow4
+
+	EvilAboveGood4:
+		cmp r2, r4									; compara x do evil com o x do good
+		jgr EvilAboveRightDiagonalGood4
+	
+		cmp r2, r4									; compara x do evil com o x do good
+		jle EvilAboveLeftDiagonalGood4
+
+		jeq EvilStrictlyAboveGood4
+
+	EvilBelowGood4:
+		cmp r2, r4									; compara x do evil com o x do good
+		jgr EvilBelowRightDiagonalGood4
+
+		cmp r2, r4									; compara x do evil com o x do good
+		jle EvilBelowLeftDiagonalGood4
+
+		jeq EvilStrictlyBelowGood4
+
+	EvilEqualGoodInRow4:
+		cmp r2, r4									; compara x do evil com o x do good
+		jgr EvilRightGood4
+
+		jmp EvilLeftGood4
+	
+	EvilAboveRightDiagonalGood4:
+		loadn r6, #3
+		sub r7, r5, r3								; good square y - evil square y
+		cmp r7, r6
+		jgr ContinueAboveRightDiagonalGood4
+		
+		sub r7, r2, r4								; evil square x - good square x
+		cmp r7, r6
+		jgr ContinueAboveRightDiagonalGood4
+		
+		jmp MoveEvilBasedOnLastMove4
+
+		ContinueAboveRightDiagonalGood4:
+			load r7, MOVE_LEFT_DIAGONAL
+			add r0, r0, r7							; move para baixo na diagonal esquerda
+	    	loadn r6, #0
+			jmp DrawEvilSquare4
+	
+	EvilAboveLeftDiagonalGood4:
+		loadn r6, #3
+		sub r7, r5, r3								; good square y - evil square y
+		cmp r7, r6
+		jgr ContinueAboveLeftDiagonalGood4
+		
+		sub r7, r4, r2								; evil square x - good square x
+		cmp r7, r6
+		jgr ContinueAboveLeftDiagonalGood4
+		
+		jmp MoveEvilBasedOnLastMove4
+
+		ContinueAboveLeftDiagonalGood4:
+			load r7, MOVE_RIGHT_DIAGONAL
+			add r0, r0, r7							; move para baixo na diagonal direita
+	    	loadn r6, #0
+			jmp DrawEvilSquare4
+
+	EvilStrictlyAboveGood4:	
+		loadn r6, #3
+		sub r7, r5, r3								; good square y - evil square y
+		cmp r7, r6
+		jle MoveEvilBasedOnLastMove4
+		
+		load r7, MOVE_VERTICAL
+		add r0, r0, r7								; move estritamente para baixo
+		loadn r6, #0
+		jmp DrawEvilSquare4
+
+	EvilBelowRightDiagonalGood4:
+		loadn r6, #3
+		sub r7, r3, r5								; evil square y - good square y
+		cmp r7, r6
+		jgr ContinueBelowRightDiagonalGood4
+		
+		sub r7, r2, r4								; evil square x - good square x
+		cmp r7, r6
+		jgr ContinueBelowRightDiagonalGood4
+		
+		jmp MoveEvilBasedOnLastMove4
+
+		ContinueBelowRightDiagonalGood4:
+			load r7, MOVE_RIGHT_DIAGONAL
+			sub r0, r0, r7							; move para cima na diagonal esquerda
+			loadn r6, #1
+			jmp DrawEvilSquare4
+
+	EvilBelowLeftDiagonalGood4:
+		loadn r6, #3
+		sub r7, r3, r5								; evil square y - good square y
+		cmp r7, r6
+		jgr ContinueBelowLeftDiagonalGood4
+		
+		sub r7, r4, r2								; good square x - evil square x
+		cmp r7, r6
+		jgr ContinueBelowLeftDiagonalGood4
+
+		jmp MoveEvilBasedOnLastMove4
+
+		ContinueBelowLeftDiagonalGood4:
+			load r7, MOVE_LEFT_DIAGONAL
+			sub r0, r0, r7							; move para cima na diagonal direita
+			loadn r6, #1
+			jmp DrawEvilSquare4
+
+	EvilStrictlyBelowGood4:
+		loadn r6, #3
+		sub r7, r3, r5								; evil square y - good square y
+		cmp r7, r6
+		jle MoveEvilBasedOnLastMove4
+
+		load r7, MOVE_VERTICAL
+		sub r0, r0, r7								; move estritamente para cima
+		loadn r6, #1
+		jmp DrawEvilSquare4
+
+	EvilRightGood4:
+		loadn r6, #3
+		sub r7, r2, r4								; evil square x - good square x
+		cmp r7, r6
+		jle MoveEvilBasedOnLastMove4
+
+		load r7, MOVE_HORIZONTAL
+		sub r0, r0, r7								; move estritamente para a esquerda
+		loadn r6, #1
+		jmp DrawEvilSquare4
+
+	EvilLeftGood4:
+		loadn r6, #3
+		sub r7, r4, r2								; evil square x - good square x
+		cmp r7, r6 
+		jle MoveEvilBasedOnLastMove4
+
+		load r7, MOVE_HORIZONTAL
+		add r0, r0, r7								; move estritamente para a direita
+		loadn r6, #0
+		jmp DrawEvilSquare4
+
+	;--------------------------
+	
+	MoveEvilBasedOnLastMove4: 
+		; breakp
+		load r7, EvilSquareLastOperationMove4		; 1 significa que decrementou e 0 significa incrementou 
+		loadn r6, #1
+		cmp r7, r6									; compara a ultima operação com 1 para ver se decrementou
+		jeq SUBTRACTMoveEvilBasedOnLastMove4
+
+		jmp ADDMoveEvilBasedOnLastMove4
+
+	ADDMoveEvilBasedOnLastMove4:					; Adiciona EvilSquareLastMove4 a posição atual do EvilSquare4
+		load r7, EvilSquareLastMove4
+		add r0, r0, r7
+		loadn r6, #0
+		jmp DrawEvilSquare4
+
+	SUBTRACTMoveEvilBasedOnLastMove4:				; Subtrai EvilSquareLastMove4 da posição atual do EvilSquare4
+		load r7, EvilSquareLastMove4
+		sub r0, r0, r7
+		loadn r6, #1
+		jmp DrawEvilSquare4
+
+	DrawEvilSquare4:
+		store EvilSquareLastMove4, r7				; Salva na memória a ultima movimentação do EvilSquare4
+		store EvilSquareLastOperationMove4, r6		; Salva na memória a ultima operação de movimentação do EvilSquare4
+		
+		load r6, positionPreviousEvilSquare4
+		call DeletePreviousEvilSquareDraw
+
+		cmp r1, r0
+		jeq GameOver
+		
+		store positionEvilSquare4, r0				; Salva na memória a atual movimentação do EvilSquare4
+		loadn r1, #2337								; Char do EvilSquare 
+		outchar r1, r0								; Desenha Char
+	
+	pop r7
+	pop r6
+	pop r5
+	pop r4
+	pop r3
+	pop r2
+	pop r1
+	pop r0	
+	rts
+
+;--------------------------------------------------------
+
+;********************************************************
+;               MOVIMENTAÇÃO DO EVIL SQUARE 5
+;********************************************************	
+
+
+MovementEvilSquare5:
+	push r0
+	push r1
+	push r2
+	push r3
+	push r4
+	push r5
+	push r6
+	push r7
+
+	load r0, positionEvilSquare5
+	store positionPreviousEvilSquare5, r0 
+	loadn r1, #' '									; Char em branco para apagar o EvilSquare
+	outchar r1, r0									; Apaga o EvilSquare
+
+	loadn r7, #40
+	mod r2, r0, r7									; pega a posicao x do evil square
+	div r3, r0, r7									; pega a posicao y do evil square
+
+	load r1, positionGoodSquare						; Criterio de parada
+
+	mod r4, r1, r7									; pega a posicao x do good square
+	div r5, r1, r7									; pega a posicao y do good square
+	
+	; Lógica para ver qual vai ser a movimentação do evil square
+
+	cmp r3, r5										; compara y do evil com o y do good
+	jle EvilAboveGood5
+	
+	cmp r3, r5										; compara y do evil com o y do good
+	jgr EvilBelowGood5
+
+	jmp EvilEqualGoodInRow5
+
+	EvilAboveGood5:
+		cmp r2, r4									; compara x do evil com o x do good
+		jgr EvilAboveRightDiagonalGood5
+	
+		cmp r2, r4									; compara x do evil com o x do good
+		jle EvilAboveLeftDiagonalGood5
+
+		jeq EvilStrictlyAboveGood5
+
+	EvilBelowGood5:
+		cmp r2, r4									; compara x do evil com o x do good
+		jgr EvilBelowRightDiagonalGood5
+
+		cmp r2, r4									; compara x do evil com o x do good
+		jle EvilBelowLeftDiagonalGood5
+
+		jeq EvilStrictlyBelowGood5
+
+	EvilEqualGoodInRow5:
+		cmp r2, r4									; compara x do evil com o x do good
+		jgr EvilRightGood5
+
+		jmp EvilLeftGood5
+	
+	EvilAboveRightDiagonalGood5:
+		loadn r6, #3
+		sub r7, r5, r3								; good square y - evil square y
+		cmp r7, r6
+		jgr ContinueAboveRightDiagonalGood5
+		
+		sub r7, r2, r4								; evil square x - good square x
+		cmp r7, r6
+		jgr ContinueAboveRightDiagonalGood5
+		
+		jmp MoveEvilBasedOnLastMove5
+
+		ContinueAboveRightDiagonalGood5:
+			load r7, MOVE_LEFT_DIAGONAL
+			add r0, r0, r7							; move para baixo na diagonal esquerda
+	    	loadn r6, #0
+			jmp DrawEvilSquare5
+	
+	EvilAboveLeftDiagonalGood5:
+		loadn r6, #3
+		sub r7, r5, r3								; good square y - evil square y
+		cmp r7, r6
+		jgr ContinueAboveLeftDiagonalGood5
+		
+		sub r7, r4, r2								; evil square x - good square x
+		cmp r7, r6
+		jgr ContinueAboveLeftDiagonalGood5
+		
+		jmp MoveEvilBasedOnLastMove5
+
+		ContinueAboveLeftDiagonalGood5:
+			load r7, MOVE_RIGHT_DIAGONAL
+			add r0, r0, r7							; move para baixo na diagonal direita
+	    	loadn r6, #0
+			jmp DrawEvilSquare5
+
+	EvilStrictlyAboveGood5:	
+		loadn r6, #3
+		sub r7, r5, r3								; good square y - evil square y
+		cmp r7, r6
+		jle MoveEvilBasedOnLastMove5
+		
+		load r7, MOVE_VERTICAL
+		add r0, r0, r7								; move estritamente para baixo
+		loadn r6, #0
+		jmp DrawEvilSquare5
+
+	EvilBelowRightDiagonalGood5:
+		loadn r6, #3
+		sub r7, r3, r5								; evil square y - good square y
+		cmp r7, r6
+		jgr ContinueBelowRightDiagonalGood5
+		
+		sub r7, r2, r4								; evil square x - good square x
+		cmp r7, r6
+		jgr ContinueBelowRightDiagonalGood5
+		
+		jmp MoveEvilBasedOnLastMove5
+
+		ContinueBelowRightDiagonalGood5:
+			load r7, MOVE_RIGHT_DIAGONAL
+			sub r0, r0, r7							; move para cima na diagonal esquerda
+			loadn r6, #1
+			jmp DrawEvilSquare5
+
+	EvilBelowLeftDiagonalGood5:
+		loadn r6, #3
+		sub r7, r3, r5								; evil square y - good square y
+		cmp r7, r6
+		jgr ContinueBelowLeftDiagonalGood5
+		
+		sub r7, r4, r2								; good square x - evil square x
+		cmp r7, r6
+		jgr ContinueBelowLeftDiagonalGood5
+
+		jmp MoveEvilBasedOnLastMove5
+
+		ContinueBelowLeftDiagonalGood5:
+			load r7, MOVE_LEFT_DIAGONAL
+			sub r0, r0, r7							; move para cima na diagonal direita
+			loadn r6, #1
+			jmp DrawEvilSquare5
+
+	EvilStrictlyBelowGood5:
+		loadn r6, #3
+		sub r7, r3, r5								; evil square y - good square y
+		cmp r7, r6
+		jle MoveEvilBasedOnLastMove5
+
+		load r7, MOVE_VERTICAL
+		sub r0, r0, r7								; move estritamente para cima
+		loadn r6, #1
+		jmp DrawEvilSquare5
+
+	EvilRightGood5:
+		loadn r6, #3
+		sub r7, r2, r4								; evil square x - good square x
+		cmp r7, r6
+		jle MoveEvilBasedOnLastMove5
+
+		load r7, MOVE_HORIZONTAL
+		sub r0, r0, r7								; move estritamente para a esquerda
+		loadn r6, #1
+		jmp DrawEvilSquare5
+
+	EvilLeftGood5:
+		loadn r6, #3
+		sub r7, r4, r2								; evil square x - good square x
+		cmp r7, r6 
+		jle MoveEvilBasedOnLastMove5
+
+		load r7, MOVE_HORIZONTAL
+		add r0, r0, r7								; move estritamente para a direita
+		loadn r6, #0
+		jmp DrawEvilSquare5
+
+	;--------------------------
+	
+	MoveEvilBasedOnLastMove5: 
+		; breakp
+		load r7, EvilSquareLastOperationMove5		; 1 significa que decrementou e 0 significa incrementou 
+		loadn r6, #1
+		cmp r7, r6									; compara a ultima operação com 1 para ver se decrementou
+		jeq SUBTRACTMoveEvilBasedOnLastMove5
+
+		jmp ADDMoveEvilBasedOnLastMove5
+
+	ADDMoveEvilBasedOnLastMove5:					; Adiciona EvilSquareLastMove5 a posição atual do EvilSquare5
+		load r7, EvilSquareLastMove5
+		add r0, r0, r7
+		loadn r6, #0
+		jmp DrawEvilSquare5
+
+	SUBTRACTMoveEvilBasedOnLastMove5:				; Subtrai EvilSquareLastMove5 da posição atual do EvilSquare5
+		load r7, EvilSquareLastMove5
+		sub r0, r0, r7
+		loadn r6, #1
+		jmp DrawEvilSquare5
+
+	DrawEvilSquare5:								
+		store EvilSquareLastMove5, r7				; Salva na memória a ultima movimentação do EvilSquare5
+		store EvilSquareLastOperationMove5, r6		; Salva na memória a ultima operação de movimentação do EvilSquare5
+		
+		load r6, positionPreviousEvilSquare5
+		call DeletePreviousEvilSquareDraw
+
+		cmp r1, r0
+		jeq GameOver
+		
+		store positionEvilSquare5, r0				; Salva na memória a atual movimentação do EvilSquare5
+		loadn r1, #2337								; Char do EvilSquare 
+		outchar r1, r0								; Desenha Char
+	
+	pop r7
+	pop r6
+	pop r5
+	pop r4
+	pop r3
+	pop r2
+	pop r1
+	pop r0	
+	rts
+
+;--------------------------------------------------------
 
 ;********************************************************
 ;                    DESENHA GOOD SQUARE
@@ -1223,9 +1586,9 @@ DrawGoodSquare:										; Desenha caractere do GoodSquare
 	push r0
 	push r1
 	
-	load r0, positionGoodSquare
+	load r0, positionGoodSquare						; Guarda a posição do GoodSquare
 	loadn r1, #'!'									; Char do GoodSquare
-	outchar r1, r0
+	outchar r1, r0									
 	store positionPreviousGoodSquare, r0			; Atualiza Posicao Anterior do GoodSquare = Posicao Atual
 	
 	pop r1
@@ -1272,107 +1635,32 @@ DeletePreviousGoodSquareDraw:						; Apaga o GoodSquare preservando o Cenario!
 	
 
 ;********************************************************
-;          DELETA POSIÇÃO ANTERIOR DO EVIL SQUARE 1
+;          DELETA POSIÇÃO ANTERIOR DO EVIL SQUARE 
 ;********************************************************	
-DeletePreviousEvilSquareDraw:						; Apaga o EvilSquare preservando o Cenario!
-	push r0
+DeletePreviousEvilSquareDraw:						; Apaga o EvilSquare preservando o Cenario
 	push r1
 	push r2
 	push r3
 	push r4
 	push r5
-
-	load r0, positionPreviousEvilSquare1			; R0 = posAnt
+	push r6
 	
-	; --> R2 = Tela1Linha0 + posAnt + posAnt/40		; tem que somar posAnt/40 no ponteiro pois as linas da string terminam com /0 !!
-
-	loadn r1, #Screen0Line0							; Endereco onde comeca a primeira linha do cenario!!
-	add r2, r1, r0									; r2 = Tela1Linha0 + posAnt
+	loadn r1, #Screen0Line0							; Endereco onde comeca a primeira linha do cenario
+	add r2, r1, r6									; r2 = Tela1Linha0 + posAnt
 	loadn r4, #40
-	div r3, r0, r4									; r3 = posAnt/40
+	div r3, r6, r4									; r3 = posAnt/40
 	add r2, r2, r3									; r2 = Tela1Linha0 + posAnt + posAnt/40
 	
 	loadi r5, r2									; r5 = Char (Tela(posAnt))
 	
-	outchar r5, r0									; Apaga o Obj na tela com o Char correspondente na memoria do cenario
+	outchar r5, r6									; Apaga o Obj na tela com o Char correspondente na memoria do cenario
 	
+	pop r6
 	pop r5
 	pop r4
 	pop r3
 	pop r2
 	pop r1
-	pop r0
-	rts
-
-;--------------------------------------------------------
-
-
-;********************************************************
-;          DELETA POSIÇÃO ANTERIOR DO EVIL SQUARE 2
-;********************************************************	
-DeletePreviousEvilSquareDraw2:						; Apaga o EvilSquare preservando o Cenario!
-	push r0
-	push r1
-	push r2
-	push r3
-	push r4
-	push r5
-
-	load r0, positionPreviousEvilSquare2			; R0 = posAnt
-	
-	; --> R2 = Tela1Linha0 + posAnt + posAnt/40		; tem que somar posAnt/40 no ponteiro pois as linas da string terminam com /0 !!
-
-	loadn r1, #Screen0Line0							; Endereco onde comeca a primeira linha do cenario!!
-	add r2, r1, r0									; r2 = Tela1Linha0 + posAnt
-	loadn r4, #40
-	div r3, r0, r4									; r3 = posAnt/40
-	add r2, r2, r3									; r2 = Tela1Linha0 + posAnt + posAnt/40
-	
-	loadi r5, r2									; r5 = Char (Tela(posAnt))
-	
-	outchar r5, r0									; Apaga o Obj na tela com o Char correspondente na memoria do cenario
-	
-	pop r5
-	pop r4
-	pop r3
-	pop r2
-	pop r1
-	pop r0
-	rts
-
-;--------------------------------------------------------
-
-;********************************************************
-;          DELETA POSIÇÃO ANTERIOR DO EVIL SQUARE 3
-;********************************************************	
-DeletePreviousEvilSquareDraw3:						; Apaga o EvilSquare preservando o Cenario!
-	push r0
-	push r1
-	push r2
-	push r3
-	push r4
-	push r5
-
-	load r0, positionPreviousEvilSquare3			; R0 = posAnt
-	
-	; --> R2 = Tela1Linha0 + posAnt + posAnt/40		; tem que somar posAnt/40 no ponteiro pois as linas da string terminam com /0 !!
-
-	loadn r1, #Screen0Line0							; Endereco onde comeca a primeira linha do cenario!!
-	add r2, r1, r0									; r2 = Tela1Linha0 + posAnt
-	loadn r4, #40
-	div r3, r0, r4									; r3 = posAnt/40
-	add r2, r2, r3									; r2 = Tela1Linha0 + posAnt + posAnt/40
-	
-	loadi r5, r2									; r5 = Char (Tela(posAnt))
-	
-	outchar r5, r0									; Apaga o Obj na tela com o Char correspondente na memoria do cenario
-	
-	pop r5
-	pop r4
-	pop r3
-	pop r2
-	pop r1
-	pop r0
 	rts
 
 ;--------------------------------------------------------
@@ -1382,12 +1670,19 @@ DeletePreviousEvilSquareDraw3:						; Apaga o EvilSquare preservando o Cenario!
 ;                       GAME OVER
 ;********************************************************	
 GameOver:
+	push r1
+	push r2
+	push r4
+	push r5
+	
 	call EraseScreen
-
+	
+	; Imprime a Tela do Chefão do Mal com o GoodSquare sendo capturado na cor branca
 	loadn r1, #GameOverScreen1Line0
 	loadn r2, #0 
 	call PrintScreenGameOver
 	
+	; Imprime a tela da String perguntando se quer jogar novamente ou não
 	loadn r1, #GameOverScreen2Line0
 	loadn r2, #2304
 	call PrintScreenGameOver
@@ -1398,13 +1693,18 @@ GameOver:
 		loadn r4, #'n'
 		load r5, Option
 		cmp r4, r5
-		jeq EndGame									; Se tiver inserido Y volta para o jogo
+		jeq EndGame									
 		
 		loadn r4, #'y'
 		cmp r4, r5
-		jeq main
+		jeq main 									; Se tiver inserido Y volta para o jogo
 
 		jmp Read_Keyboard
+
+	pop r5
+	pop r4
+	pop r2
+	pop r1
 
 ;--------------------------------------------------------
 
@@ -1419,14 +1719,17 @@ EndGame:
 								
 	call EraseScreen
 
+	; Imprime a Tela do chefão do Mal na cor branca
 	loadn r1, #EndGameScreen1Line0
 	loadn r2, #0 
 	call PrintScreenEndGame
 
+	; Imprime a frase de final de jogo na cor vermelha
 	loadn r1, #EndGameScreen2Line0
 	loadn r2, #2304 
 	call PrintScreenEndGame
 
+	; Imprime o Nickname
 	loadn r0, #287
 	loadn r1, #Nickname
 	loadn r2, #0
@@ -1443,23 +1746,21 @@ EndGame:
 ;********************************************************
 ;                   INPUT NICKNAME
 ;********************************************************
-InputNickname:										; Rotina que recebe uma palavra para que o segundo usuario tente adivinhar
-	push r0											; Recebe letra digitada
-	push r1											; codigo do enter
-	push r2											; Contador de letras para o vetor que armazena a palavra
-	push r3											; ponteiro para palavra
-	push r4											; palavra[r3+r2]
-	push r5											; Tamanho maximo da palavra
-	push r6											; Guarda próxima posicao da letra a ser digitada
+InputNickname:										
+	push r0											
+	push r1											
+	push r2											
+	push r3											
+	push r4											
+	push r5
+	push r6											
 
-	loadn r1, #13									; codigo enter
-	loadn r2, #0									; inicia r2 = 0
-	loadn r3, #Nickname								; ponteiro para palavra
-	loadn r5, #26									; Tamanho maximo da palavra
-	loadn r6, #887									; Primeira posicao da letra da palavra
+	loadn r1, #13									; codigo ASCII do enter
+	loadn r2, #0									; inicia r2 como 0
+	loadn r3, #Nickname								; ponteiro para o Nickname
+	loadn r5, #26									; Tamanho maximo do Nickname
+	loadn r6, #887									; Primeira posicao da letra do Nickname
 	;----------------
-	
-	;call PrintInsertString							; Seleciona uma mensagem para imprimir - Digite uma palavra!!
 
    	InputNickname_Loop:
 		call InputLetter							; Espera que uma tecla seja digitada e salva na variavel global "Letra"
@@ -1468,18 +1769,18 @@ InputNickname:										; Rotina que recebe uma palavra para que o segundo usuar
 		outchar r0, r6
 		inc r6
 
-		cmp r0, r1									;comparacao se r0 eh enter(13)
-		jeq InputNickname_Fim						; VAi para o fim se Enter!
+		cmp r0, r1									; Comparacao se R0 é o código ASCII do enter(13)
+		jeq InputNickname_Exit						; Vai para o fim se digitou Enter!
 		
 		add r4, r3, r2
-		storei r4, r0								; palavra[r2] = Letra
+		storei r4, r0								; Palavra[r2] = Letra
 
 		inc r2
-		store PalavraSize, r2						; Atualiza o tamanho da palavra
+		store WordSize, r2							; Atualiza o tamanho da palavra
 		cmp r2, r5									; verifica se r2 = 40
-		jne InputNickname_Loop						; Se for, sai, senao goto loop!!
+		jne InputNickname_Loop						; Se for, exit, se não go to loop
 				
-   InputNickname_Fim:
+   InputNickname_Exit:
 	; Poe um /0 no final da palavra pra poder imprimir e testar!!
 	loadn r0, #0
 	add r4, r3, r2
@@ -1498,47 +1799,24 @@ InputNickname:										; Rotina que recebe uma palavra para que o segundo usuar
 
 
 ;********************************************************
-;              IMPRIME INSERT YOUR NICKNAME
-;********************************************************
-PrintInsertString:									; Seleciona uma mensagem para imprimir - Digite uma palavra!!
-	push r0
-	push r1
-	push r2
-	
-	loadn r0, #410									; Posicao na tela onde a mensagem sera' escrita
-	loadn r1, #InsertString							; Carrega r1 com o endereco do vetor que contem a mensagem
-	loadn r2, #0									; Seleciona a COR da Mensagem
-	
-	call PrintString   								;  r0 = Posicao da tela que o primeiro caractere da mensagem sera' impresso;  r1 = endereco onde comeca a mensagem; r2 = cor da mensagem.   Obs: a mensagem sera' impressa ate' encontrar "/0"
-	
-	pop r2
-	pop r1
-	pop r0	
-	rts
-
-;--------------------------------------------------------
-
-
-;********************************************************
 ;                   DIGITE UMA LETRA
 ;********************************************************
-InputLetter:										; Espera que uma tecla seja digitada e salva na variavel global "Letra"
+InputLetter:										; Espera que uma tecla seja digitada e salva na variavel global "Letter"
 	push r0
 	push r1
 	push r2
 	loadn r1, #255									; Se nao digitar nada vem 255
-	loadn r2, #0									; Logo que programa a FPGA o inchar vem 0
+	loadn r2, #0									
 
     InputLetter_Loop:
 		inchar r0									; Le o teclado, se nada for digitado = 255
-		cmp r0, r1									;compara r0 com 255
-		jeq InputLetter_Loop						; Fica lendo ate' que digite uma tecla valida
+		cmp r0, r1									; compara r0 com 255
+		jeq InputLetter_Loop						; Fica lendo até que digite uma tecla valida
 
+		cmp r0, r2									; compara r0 com 0
+		jeq InputLetter_Loop						
 
-		cmp r0, r2									;compara r0 com 0
-		jeq InputLetter_Loop						; Le novamente pois Logo que programa abre a FPGA o inchar vem 0
-
-	store Letter, r0								; Salva a tecla na variavel global "Letra"
+	store Letter, r0								; Salva a tecla na variavel global "Letter"
 	
 	pop r2
 	pop r1
@@ -1551,23 +1829,17 @@ InputLetter:										; Espera que uma tecla seja digitada e salva na variavel g
 ;********************************************************
 ;                     VERIFICA OPCAO
 ;********************************************************
-CheckOption:										; Espera que uma tecla seja digitada e salva na variavel global "Letra"
+CheckOption:										; Espera que uma tecla seja digitada e salva na variavel global "Option"
 	push r0
 	push r1
-	push r2
-	push r3
-	push r4
-	loadn r4, #255									; Se nao digitar nada vem 255
+	loadn r1, #255									; Se nao digitar nada vem 255
 
    CheckOption_Loop:
-		inchar r3									; Le o teclado, se nada for digitado = 255
-		store Option, r3							; Salva a tecla na variavel global "Letra"
-		cmp r3, r4									; compara r3 com 255
-		jeq CheckOption_Loop						; Fica lendo ate' que digite uma tecla valida
+		inchar r0									; Le o teclado, se nada for digitado = 255
+		store Option, r0							; Salva a tecla na variavel global "Option"
+		cmp r0, r1									; compara r0 com 255
+		jeq CheckOption_Loop						; Fica lendo até que digite uma tecla valida
 
-	pop r4
-	pop r3
-	pop r2
 	pop r1
 	pop r0
 	rts
@@ -1579,17 +1851,17 @@ CheckOption:										; Espera que uma tecla seja digitada e salva na variavel g
 ;                   IMPRIME STRING
 ;********************************************************	
 PrintString:										;  Rotina de Impresao de Mensagens:    r0 = Posicao da tela que o primeiro caractere da mensagem sera' impresso;  r1 = endereco onde comeca a mensagem; r2 = cor da mensagem.   Obs: a mensagem sera' impressa ate' encontrar "/0"
-	push r0											; protege o r0 na pilha para preservar seu valor
-	push r1											; protege o r1 na pilha para preservar seu valor
-	push r2											; protege o r1 na pilha para preservar seu valor
-	push r3											; protege o r3 na pilha para ser usado na subrotina
-	push r4											; protege o r4 na pilha para ser usado na subrotina
+	push r0											
+	push r1											
+	push r2											
+	push r3											
+	push r4											
 	
 	loadn r3, #'\0'									; Criterio de parada
 
   	PrintString_Loop:	
 		loadi r4, r1
-		cmp r4, r3									; If (Char == \0)  vai Embora
+		cmp r4, r3									; If (Char == \0) vai pro exit
 		jeq PrintString_Exit
 		add r4, r2, r4								; Soma a Cor
 		outchar r4, r0								; Imprime o caractere na tela
@@ -1612,13 +1884,13 @@ PrintString:										;  Rotina de Impresao de Mensagens:    r0 = Posicao da tel
 ;                   IMPRIME STRING2
 ;********************************************************	
 PrintString2:										;  Rotina de Impresao de Mensagens:    r0 = Posicao da tela que o primeiro caractere da mensagem sera' impresso;  r1 = endereco onde comeca a mensagem; r2 = cor da mensagem.   Obs: a mensagem sera' impressa ate' encontrar "/0"
-	push r0											; protege o r0 na pilha para preservar seu valor
-	push r1											; protege o r1 na pilha para preservar seu valor
-	push r2											; protege o r1 na pilha para preservar seu valor
-	push r3											; protege o r3 na pilha para ser usado na subrotina
-	push r4											; protege o r4 na pilha para ser usado na subrotina
-	push r5											; protege o r5 na pilha para ser usado na subrotina
-	push r6											; protege o r6 na pilha para ser usado na subrotina
+	push r0											
+	push r1											
+	push r2											
+	push r3											
+	push r4											
+	push r5											
+	push r6											
 	
 	
 	loadn r3, #'\0'									; Criterio de parada
@@ -1627,7 +1899,7 @@ PrintString2:										;  Rotina de Impresao de Mensagens:    r0 = Posicao da te
    PrintString2_Loop:	
 		loadi r4, r1
 		cmp r4, r3									; If (Char == \0)  vai Embora
-		jeq PrintString2_Sai
+		jeq PrintString2_Exit
 		cmp r4, r5									; If (Char == ' ')  vai Pula outchar do espaco para na apagar outros caracteres
 		jeq PrintString2_Skip
 		add r4, r2, r4								; Soma a Cor
@@ -1639,7 +1911,7 @@ PrintString2:										;  Rotina de Impresao de Mensagens:    r0 = Posicao da te
 		inc r6
 		jmp PrintString2_Loop
 	
-   PrintString2_Sai:	
+   PrintString2_Exit:	
 	pop r6											; Resgata os valores dos registradores utilizados na Subrotina da Pilha
 	pop r5
 	pop r4
@@ -1648,32 +1920,6 @@ PrintString2:										;  Rotina de Impresao de Mensagens:    r0 = Posicao da te
 	pop r1
 	pop r0
 	rts
-
-;--------------------------------------------------------
-
-
-;********************************************************
-;                 DESENHA TELA COLORIDO
-;********************************************************
-DrawScreenColorful:
-	push r0
-	push r1
-	push r2
-	
-	loadn r0, #0									; desenha tela colorido
-	loadn r1, #0									; código do primeiro char full prenchido
-	loadn r2, #1200									; posicao do final da tela
-	
-	   DrawScreenColorful_Loop:	
-		outchar r1, r0
-		inc r0
-		cmp r2, r0
-		jne DrawScreenColorful_Loop
- 
- 	pop r2
-	pop r1
-	pop r0
-	rts	
 
 ;--------------------------------------------------------
 
@@ -1704,12 +1950,12 @@ EraseScreen:
 ;                       IMPRIME TELA
 ;********************************************************	
 PrintScreen:		  		  
-	push r0											; protege o r0 na pilha para ser usado na subrotina
-	push r1											; r1 = endereco onde comeca a primeira linha do Cenario
-	push r2											; r2 = cor do Cenario para ser impresso
-	push r3											; protege o r3 na pilha para ser usado na subrotina
-	push r4											; protege o r4 na pilha para ser usado na subrotina
-	push r5											; protege o r5 na pilha para ser usado na subrotina
+	push r0											
+	push r1											
+	push r2											
+	push r3											
+	push r4											
+	push r5											
 
 	loadn r0, #0  									; posicao inicial tem que ser o comeco da tela!
 	loadn r3, #40  									; Incremento da posicao da tela!
@@ -1737,13 +1983,13 @@ PrintScreen:
 ;         IMPRIME TELA2 (DESENHA O CENÁRIO PRINCIAL)
 ;********************************************************	
 PrintScreenScenery: 								;  Rotina de Impresao de Cenario na Tela Inteira
-	push r0											; protege o r3 na pilha para ser usado na subrotina
-	push r1											; r1 = endereco onde comeca a primeira linha do Cenario
-	push r2											; r2 = cor do Cenario para ser impresso
-	push r3											; protege o r3 na pilha para ser usado na subrotina
-	push r4											; protege o r4 na pilha para ser usado na subrotina
-	push r5											; protege o r5 na pilha para ser usado na subrotina
-	push r6											; protege o r6 na pilha para ser usado na subrotina
+	push r0											
+	push r1											
+	push r2											
+	push r3											
+	push r4											
+	push r5											
+	push r6											
 
 	loadn r0, #0  									; posicao inicial tem que ser o comeco da tela!
 	loadn r3, #40  									; Incremento da posicao da tela!
@@ -1774,13 +2020,13 @@ PrintScreenScenery: 								;  Rotina de Impresao de Cenario na Tela Inteira
 ;          IMPRIME TELA3 (DESENHA O MENU)
 ;********************************************************	
 PrintScreenMenu: 									;  Rotina de Impresao de Cenario na Tela Inteira
-	push r0											; protege o r3 na pilha para ser usado na subrotina
-	push r1											; r1 = endereco onde comeca a primeira linha do Cenario
-	push r2											; r2 = cor do Cenario para ser impresso
-	push r3											; protege o r3 na pilha para ser usado na subrotina
-	push r4											; protege o r4 na pilha para ser usado na subrotina
-	push r5											; protege o r5 na pilha para ser usado na subrotina
-	push r6											; protege o r6 na pilha para ser usado na subrotina
+	push r0											
+	push r1											
+	push r2											
+	push r3											
+	push r4											
+	push r5											
+	push r6											
 
 	loadn r0, #0  									; posicao inicial tem que ser o comeco da tela!
 	loadn r3, #40  									; Incremento da posicao da tela!
@@ -1810,13 +2056,13 @@ PrintScreenMenu: 									;  Rotina de Impresao de Cenario na Tela Inteira
 ;          IMPRIME TELA4 (DESENHA A TELA DE LEVELUP)
 ;********************************************************	
 PrintScreenLevelUp: 								;  Rotina de Impresao de Cenario na Tela Inteira
-	push r0											; protege o r3 na pilha para ser usado na subrotina
-	push r1											; r1 = endereco onde comeca a primeira linha do Cenario
-	push r2											; r2 = cor do Cenario para ser impresso
-	push r3											; protege o r3 na pilha para ser usado na subrotina
-	push r4											; protege o r4 na pilha para ser usado na subrotina
-	push r5											; protege o r5 na pilha para ser usado na subrotina
-	push r6											; protege o r6 na pilha para ser usado na subrotina
+	push r0											
+	push r1											
+	push r2											
+	push r3											
+	push r4											
+	push r5											
+	push r6											
 
 	loadn r0, #0  									; posicao inicial tem que ser o comeco da tela!
 	loadn r3, #40  									; Incremento da posicao da tela!
@@ -1846,13 +2092,13 @@ PrintScreenLevelUp: 								;  Rotina de Impresao de Cenario na Tela Inteira
 ;          IMPRIME TELA5 (DESENHA A TELA DE WINGAME)
 ;********************************************************	
 PrintScreenWinGame: 								;  Rotina de Impresao de Cenario na Tela Inteira
-	push r0											; protege o r3 na pilha para ser usado na subrotina
-	push r1											; r1 = endereco onde comeca a primeira linha do Cenario
-	push r2											; r2 = cor do Cenario para ser impresso
-	push r3											; protege o r3 na pilha para ser usado na subrotina
-	push r4											; protege o r4 na pilha para ser usado na subrotina
-	push r5											; protege o r5 na pilha para ser usado na subrotina
-	push r6											; protege o r6 na pilha para ser usado na subrotina
+	push r0											
+	push r1											
+	push r2											
+	push r3											
+	push r4											
+	push r5											
+	push r6											
 
 	loadn r0, #0  									; posicao inicial tem que ser o comeco da tela!
 	loadn r3, #40  									; Incremento da posicao da tela!
@@ -1882,13 +2128,13 @@ PrintScreenWinGame: 								;  Rotina de Impresao de Cenario na Tela Inteira
 ;          IMPRIME TELA6 (DESENHA A TELA DE GAMEOVER)
 ;********************************************************	
 PrintScreenGameOver: 								;  Rotina de Impresao de Cenario na Tela Inteira
-	push r0											; protege o r3 na pilha para ser usado na subrotina
-	push r1											; r1 = endereco onde comeca a primeira linha do Cenario
-	push r2											; r2 = cor do Cenario para ser impresso
-	push r3											; protege o r3 na pilha para ser usado na subrotina
-	push r4											; protege o r4 na pilha para ser usado na subrotina
-	push r5											; protege o r5 na pilha para ser usado na subrotina
-	push r6											; protege o r6 na pilha para ser usado na subrotina
+	push r0											
+	push r1											
+	push r2											
+	push r3											
+	push r4											
+	push r5											
+	push r6											
 
 	loadn r0, #0  									; posicao inicial tem que ser o comeco da tela!
 	loadn r3, #40  									; Incremento da posicao da tela!
@@ -1918,13 +2164,13 @@ PrintScreenGameOver: 								;  Rotina de Impresao de Cenario na Tela Inteira
 ;          IMPRIME TELA7 (DESENHA A TELA DE ENDGAME)
 ;********************************************************	
 PrintScreenEndGame: 								;  Rotina de Impresao de Cenario na Tela Inteira
-	push r0											; protege o r3 na pilha para ser usado na subrotina
-	push r1											; r1 = endereco onde comeca a primeira linha do Cenario
-	push r2											; r2 = cor do Cenario para ser impresso
-	push r3											; protege o r3 na pilha para ser usado na subrotina
-	push r4											; protege o r4 na pilha para ser usado na subrotina
-	push r5											; protege o r5 na pilha para ser usado na subrotina
-	push r6											; protege o r6 na pilha para ser usado na subrotina
+	push r0											
+	push r1											
+	push r2											
+	push r3											
+	push r4											
+	push r5											
+	push r6											
 
 	loadn r0, #0  									; posicao inicial tem que ser o comeco da tela!
 	loadn r3, #40  									; Incremento da posicao da tela!
@@ -1940,43 +2186,7 @@ PrintScreenEndGame: 								;  Rotina de Impresao de Cenario na Tela Inteira
 		cmp r0, r5									; Compara r0 com 1200
 		jne PrintScreenEndGame_Loop					; Enquanto r0 < 1200
 
-	pop r6											; Resgata os valores dos registradores utilizados na Subrotina da Pilha
-	pop r5
-	pop r4
-	pop r3
-	pop r2
-	pop r1
-	pop r0
-	rts
-;--------------------------------------------------------
-
-;********************************************************
-;          IMPRIME TELA8 (DESENHA A TELA DE STORY)
-;********************************************************	
-PrintScreenStory: 									;  Rotina de Impresao de Cenario na Tela Inteira
-	push r0											; protege o r3 na pilha para ser usado na subrotina
-	push r1											; r1 = endereco onde comeca a primeira linha do Cenario
-	push r2											; r2 = cor do Cenario para ser impresso
-	push r3											; protege o r3 na pilha para ser usado na subrotina
-	push r4											; protege o r4 na pilha para ser usado na subrotina
-	push r5											; protege o r5 na pilha para ser usado na subrotina
-	push r6											; protege o r6 na pilha para ser usado na subrotina
-
-	loadn r0, #0  									; posicao inicial tem que ser o comeco da tela!
-	loadn r3, #40  									; Incremento da posicao da tela!
-	loadn r4, #41  									; incremento do ponteiro das linhas da tela
-	loadn r5, #1200 								; Limite da tela!
-	loadn r6, #StoryScreen0Line0					; Endereco onde comeca a primeira linha do cenario!!
-	
-    PrintScreenStory_Loop:
-		call PrintString2
-		add r0, r0, r3  							; incrementa posicao para a segunda linha na tela -->  r0 = R0 + 40
-		add r1, r1, r4  							; incrementa o ponteiro para o comeco da proxima linha na memoria (40 + 1 por causa do /0 !!) --> r1 = r1 + 41
-		add r6, r6, r4  							; incrementa o ponteiro para o comeco da proxima linha na memoria (40 + 1 por causa do /0 !!) --> r1 = r1 + 41
-		cmp r0, r5									; Compara r0 com 1200
-		jne PrintScreenStory_Loop					; Enquanto r0 < 1200
-
-	pop r6											; Resgata os valores dos registradores utilizados na Subrotina da Pilha
+	pop r6											
 	pop r5
 	pop r4
 	pop r3
@@ -1996,36 +2206,44 @@ DrawScenery:
 
 	call EraseScreen
 
-	loadn r1, #Screen1Line0
-	loadn r2, #2048
+	; Imprime uma parte da linha de chegada na cor cinza
+	loadn r1, #Screen1Line0 
+	loadn r2, #2048	
 	call PrintScreenScenery
 	
+	; Imprime uma parte da linha de chegada na cor branca
 	loadn r1, #Screen2Line0
 	loadn r2, #0
 	call PrintScreenScenery
 	
+	; Imprime o tapete do cenário principal na cor marrom
 	loadn r1, #Screen3Line0
 	loadn r2, #256
 	call PrintScreenScenery
 	
+	; Imprime os guardas do castelo na cor teal
 	loadn r1, #Screen4Line0
 	loadn r2, #1536 
 	call PrintScreenScenery
 	
+	; Imprime o Nickname do Usuário no canto inferior esquerdo
 	loadn r0, #1161
 	loadn r1, #Nickname
 	loadn r2, #0
 	call PrintString
 
-	loadn r0, #1190
-	loadn r1, #2817
+	; Imprime a estrelinha do lado do Level
+	loadn r0, #1190									; Posição da estrela
+	loadn r1, #2817									; Codigo ASCII da estrela + Cor amerela
 	outchar r1, r0
 
+	; Imprime a String 'Level' no canto inferior direito
 	loadn r0, #1192
 	loadn r1, #LevelString
 	loadn r2, #2816
 	call PrintString
-
+	
+	; Imprime o número do Level do lado da string
 	loadn r0, #1198
 	load r1, Level
 	loadn r2, #2864 								;soma 2816(cor) com o codigo ascii 0
@@ -2044,10 +2262,10 @@ DrawScenery:
 ;                       DELAY
 ;********************************************************		
 Delay:
-	push r0					   						; Utiliza Push e Pop para nao afetar os Registradores do programa principal
+	push r0					   						
 	push r1
 	
-	loadn r1, #2000   								; a
+	loadn r1, #2000  								; a
 	
     Delay_volta2:									; Quebrou o contador acima em duas partes (dois loops de decremento)
 	loadn r0, #3000									; b
@@ -2061,7 +2279,7 @@ Delay:
 	pop r1
 	pop r0
 	
-	rts												; return
+	rts												
 
 ;--------------------------------------------------------
 
@@ -2070,13 +2288,13 @@ Delay:
 ;             TIME DA ANIMAÇÃO DO LEVEL UP
 ;********************************************************		
 Time:
-	push r0											; Utiliza Push e Pop para nao afetar os Registradores do programa principal
+	push r0											
 	push r1
 	
-	loadn r1, #6000   ; a
+	loadn r1, #1000   ; a
 	
     Time_volta2:									; Quebrou o contador acima em duas partes (dois loops de decremento)
-	loadn r0, #6000	; b
+	loadn r0, #6000	  ; b
 	
     Time_volta1: 
 		dec r0										; (4*a + 6)b = 1000000  == 1 seg  em um clock de 1MHz
@@ -2086,7 +2304,7 @@ Time:
 	
 	pop r1
 	pop r0
-	rts												; return
+	rts												
 
 ;--------------------------------------------------------
 
@@ -2253,101 +2471,6 @@ Screen4Line26 : string "                                        "
 Screen4Line27 : string "                                        "
 Screen4Line28 : string "                                        "
 Screen4Line29 : string "                                        "
-
-; Tela Das histórias
-StoryScreen0Line0  : string "                                        "
-StoryScreen0Line1  : string "                                        "
-StoryScreen0Line2  : string "                                        "
-StoryScreen0Line3  : string "                                        "
-StoryScreen0Line4  : string "                                        "
-StoryScreen0Line5  : string "                                        "
-StoryScreen0Line6  : string "                                        "
-StoryScreen0Line7  : string "                                        "
-StoryScreen0Line8  : string "                                        "
-StoryScreen0Line9  : string "                                        "
-StoryScreen0Line10 : string "                                        "
-StoryScreen0Line11 : string "                                        "
-StoryScreen0Line12 : string "                                        "
-StoryScreen0Line13 : string "                                        "
-StoryScreen0Line14 : string "                                        "
-StoryScreen0Line15 : string "                                        "
-StoryScreen0Line16 : string "                                        "
-StoryScreen0Line17 : string "                                        "
-StoryScreen0Line18 : string "                                        "
-StoryScreen0Line19 : string "                                        "
-StoryScreen0Line20 : string "                                        "
-StoryScreen0Line21 : string "                                        "
-StoryScreen0Line22 : string "                                        "
-StoryScreen0Line23 : string "                                        "
-StoryScreen0Line24 : string "                                        "
-StoryScreen0Line25 : string "                                        "
-StoryScreen0Line26 : string "                                        "
-StoryScreen0Line27 : string "                                        "
-StoryScreen0Line28 : string "                                        "
-StoryScreen0Line29 : string "                                        "	
-
-; Tela 1 do castelo 
-StoryScreen1Line0  : string "                                        "
-StoryScreen1Line1  : string " In a kingdom rulled by a cruel square, "
-StoryScreen1Line2  : string "                                        "
-StoryScreen1Line3  : string " there lived a humble square that       "
-StoryScreen1Line4  : string "                                        "
-StoryScreen1Line5  : string " commited a crime of disobedience       "
-StoryScreen1Line6  : string "                                        "
-StoryScreen1Line7  : string " against the king. He was then taken to "
-StoryScreen1Line8  : string "                                        "
-StoryScreen1Line9  : string " the castle, chained, prepared for the  "
-StoryScreen1Line10 : string "                                        "
-StoryScreen1Line11 : string " worst, for he knew of the wickedness   "
-StoryScreen1Line12 : string "                                        "
-StoryScreen1Line13 : string " of King.                               "
-StoryScreen1Line14 : string "                                        "
-StoryScreen1Line15 : string "                                        "
-StoryScreen1Line16 : string "                                        "
-StoryScreen1Line17 : string "                                        "
-StoryScreen1Line18 : string "                                        "
-StoryScreen1Line19 : string "                                        "
-StoryScreen1Line20 : string "                                        "
-StoryScreen1Line21 : string "                                        "
-StoryScreen1Line22 : string "                                        "
-StoryScreen1Line23 : string "                                        "
-StoryScreen1Line24 : string "                                        "
-StoryScreen1Line25 : string "                                        "
-StoryScreen1Line26 : string "                                        "
-StoryScreen1Line27 : string "                                        "
-StoryScreen1Line28 : string "                                        "
-StoryScreen1Line29 : string "                                        "
-
-StoryScreen2Line0  : string "                                        "
-StoryScreen2Line1  : string "                                        "
-StoryScreen2Line2  : string "                                        "
-StoryScreen2Line3  : string "                                        "
-StoryScreen2Line4  : string "                                        "
-StoryScreen2Line5  : string "                                        "
-StoryScreen2Line6  : string "                                        "
-StoryScreen2Line7  : string "                                        "
-StoryScreen2Line8  : string "                                        "
-StoryScreen2Line9  : string "                                        "
-StoryScreen2Line10 : string "                                        "
-StoryScreen2Line11 : string "                                        "
-StoryScreen2Line12 : string "                                        "
-StoryScreen2Line13 : string "                                        "
-StoryScreen2Line14 : string "                                        "
-StoryScreen2Line15 : string "                          / ]       / ] "
-StoryScreen2Line16 : string "                          | |--///--| | "
-StoryScreen2Line17 : string "                     / ]__| |       | |_"
-StoryScreen2Line18 : string "                     | |  | |       | | "
-StoryScreen2Line19 : string "                     | |  | |   )   | | "
-StoryScreen2Line20 : string "                     | |  | |  )))  | | "
-StoryScreen2Line21 : string "                          | |  )))  | | "
-StoryScreen2Line22 : string "                              /  /      "
-StoryScreen2Line23 : string "                         ____/  /       "
-StoryScreen2Line24 : string "                        /   ___/        "
-StoryScreen2Line25 : string "                _______/   /            "
-StoryScreen2Line26 : string "               /     _____/             "
-StoryScreen2Line27 : string "              /     /                   "
-StoryScreen2Line28 : string "             /     /                    "
-StoryScreen2Line29 : string "            /     /                     "
 
 
 ; Tela Inicial

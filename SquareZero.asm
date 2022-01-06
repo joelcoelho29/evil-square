@@ -136,23 +136,23 @@ InitializeVariables:
 	loadn r0, #1059
 	store positionGoodSquare, r0					; Guarda posição GoodSquare
 	
-	loadn r0, #159
+	loadn r0, #161
 	store positionEvilSquare1, r0					; Guarda posição EvilSquare1
 	store positionPreviousEvilSquare1, r0
 	
-	loadn r0, #139
+	loadn r0, #180
 	store positionEvilSquare2, r0					; Guarda posição EvilSquare2
 	store positionPreviousEvilSquare2, r0
 	
-	loadn r0, #1119
+	loadn r0, #199
 	store positionEvilSquare3, r0					; Guarda posição EvilSquare3
 	store positionPreviousEvilSquare3, r0
 	
-	loadn r0, #1081
+	loadn r0, #321
 	store positionEvilSquare4, r0					; Guarda posição EvilSquare4
 	store positionPreviousEvilSquare4, r0
 	
-	loadn r0, #600
+	loadn r0, #359
 	store positionEvilSquare5, r0					; Guarda posição EvilSquare4
 	store positionPreviousEvilSquare5, r0
 	
@@ -292,14 +292,14 @@ Win:
 ;                        LEVELS
 ;********************************************************	
 Level1:
-	call MovementEvilSquare1
+	call MovementEvilSquare2
 	call MovementGoodSquare
 	call Delay
 	jmp Level1
 
 Level2:
 	call MovementEvilSquare1
-	call MovementEvilSquare2
+	call MovementEvilSquare3
 	call MovementGoodSquare
 	call Delay
 	jmp Level2
@@ -314,9 +314,9 @@ Level3:
 
 Level4:
 	call MovementEvilSquare1
-	call MovementEvilSquare2
 	call MovementEvilSquare3
 	call MovementEvilSquare4
+	call MovementEvilSquare5
 	call MovementGoodSquare
 	call Delay
 	jmp Level4
@@ -2265,7 +2265,7 @@ Delay:
 	push r0					   						
 	push r1
 	
-	loadn r1, #2000  								; a
+	loadn r1, #1500  								; a
 	
     Delay_volta2:									; Quebrou o contador acima em duas partes (dois loops de decremento)
 	loadn r0, #3000									; b

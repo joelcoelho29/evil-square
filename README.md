@@ -4,6 +4,14 @@
 > Fuja de soldados ao longo dos corredores do castelo de um Rei insano. <br> Este é um jogo singleplayer desenvolvido em assembly.
 > <br>
 
+## **História**
+> A história do jogo se passa em um reino governado por um quadradado cruel.
+Neste reinado havia um humilde e bondoso quadrado que cometeu um crime de desobediência ao rei. 
+Então, ele foi levado ao castelo, acorrentado, preparado para o pior, pois ele sabia da maldade do rei.
+Sem ser surpreendido, o mesmo foi setenciado a morte apenas para a satisfação do rei. Cansado das
+injustiças ele recuperou suas forças e, de maneira inacreditável, quebrou as correntes e começou a fugir
+para fora do castelo percorrendo metros intermináveis de um tapete aveludado de cor vermelha.
+
 
 ## **Como Jogar**
 > Após inserir seu Nickname e dar Start no jogo, use as teclas WASD para se esquivar dos Evil's Square's e chegue até a linha de chegada! Conforme você for subindo de nível, novos oponentes surgirão e ficará mais difícil de vencer o jogo! Caso você não consiga se esquivar de um Evil Square, você perderá o jogo! Mas calme, é só apertar a tecla de jogar novamente que o jogo reinicia! <br>

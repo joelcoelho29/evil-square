@@ -169,6 +169,10 @@ LevelUp:
 	push r0
 	push r1
 	push r2
+	
+	loadn r1, #5									; Valor do nível
+	cmp r0, r1										; Faz a comparação entre o Level (R0) e o R1 verificando se é o level que o mesmo apresenta  
+	jeq Level5
 
 	loadn r1, #1									; Valor do nível
 	cmp r0, r1										; Faz a comparação entre o Level (R0) e o R1 verificando se é o level que o mesmo apresenta  
@@ -193,10 +197,6 @@ LevelUp:
 	cmp r0, r1										; Faz a comparação entre o Level (R0) e o R1 verificando se é o level que o mesmo apresenta  
 	jeq Level4
 	
-	loadn r1, #5									; Valor do nível
-	cmp r0, r1										; Faz a comparação entre o Level (R0) e o R1 verificando se é o level que o mesmo apresenta  
-	jeq Level5
-
 	call Win										; Se fez todas as comparações (até o 5) e não entrou em nenhum LVL é porque ganhou o jogo
 
 	pop r2
@@ -2265,7 +2265,7 @@ Delay:
 	push r0					   						
 	push r1
 	
-	loadn r1, #1500  								; a
+	loadn r1, #500  								; a
 	
     Delay_volta2:									; Quebrou o contador acima em duas partes (dois loops de decremento)
 	loadn r0, #3000									; b

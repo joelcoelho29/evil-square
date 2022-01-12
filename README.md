@@ -8,6 +8,14 @@ https://drive.google.com/file/d/15_XZWoxpiOITLKozNe7TU3F1zaieRQLu/view
 > Fuja de soldados ao longo dos corredores do castelo de um Rei insano. <br> Este é um jogo singleplayer desenvolvido em assembly.
 > <br>
 
+## **História**
+> A história do jogo se passa em um reino governado por um quadradado cruel.
+Neste reinado havia um humilde e bondoso quadrado que cometeu um crime de desobediência ao rei. 
+Então, ele foi levado ao castelo, acorrentado, preparado para o pior, pois ele sabia da maldade do rei.
+Sem ser surpreendido, o mesmo foi setenciado a morte apenas para a satisfação do rei. Cansado das
+injustiças ele recuperou suas forças e, de maneira inacreditável, quebrou as correntes e começou a fugir
+para fora do castelo percorrendo metros intermináveis de um tapete aveludado de cor vermelha.
+
 
 ## **Como Jogar**
 > Após inserir seu Nickname e dar Start no jogo, use as teclas WASD para se esquivar dos Evil's Square's e chegue até a linha de chegada! Conforme você for subindo de nível, novos oponentes surgirão e ficará mais difícil de vencer o jogo! Caso você não consiga se esquivar de um Evil Square, você perderá o jogo! Mas calme, é só apertar a tecla de jogar novamente que o jogo reinicia! <br>
@@ -27,15 +35,15 @@ https://drive.google.com/file/d/15_XZWoxpiOITLKozNe7TU3F1zaieRQLu/view
 ---
 
 ### 2) **Lógica principal do jogo**
-> #### **Level Up** <br> 
+> ### **Level Up** <br> 
 > Responsável pela verificação e chamada dos níveis.
 
-> #### **Movimentação do Good Square** <br> 
+> ### **Movimentação do Good Square** <br> 
 > Responsável pela movimentação do Good Square. <br> 
 > > Critério de parada:
 > - Verificação com a linha de chegada;
 
-> #### **Movimentação dos Evil's Squares** <br> 
+> ### **Movimentação dos Evil's Squares** <br> 
 > Responsável pela movimentação do Evil Square. <br> 
 > > Critério de parada:
 > - Verificação de colisão com o Good Square;
@@ -45,21 +53,21 @@ https://drive.google.com/file/d/15_XZWoxpiOITLKozNe7TU3F1zaieRQLu/view
 >   - Verificação da linha (Y);
 >   - Verificação da coluna (X);
 
-> #### **Game Over** <br> 
+> ### **Game Over** <br> 
 > Responsável pela impressão da tela de Game Over, perguntando se o usuário deseja jogar novamente.<br> 
 > > Opção 1 (jogar novamente):
 > - Volta para a função main;
 > > Opção 2 (sair do jogo):
 > - Chama a função EndGame;
 
-> #### **End Game** <br> 
+> ### **End Game** <br> 
 > Responsável por exibir as estatísticas da partida.<br> 
 
 ---
 
 ### **Observações de implementação:**
 
-> #### **Delay** <br> 
+> ### **Delay** <br> 
 > Tal função é responsável por fazer a interação entre o usuário e o jogo. Entretanto, é importante ressaltar que os valores implementados podem variar de ambiente para ambiente.  
 > É provável que em sua máquina o jogo não rode corretamente, uma vez que os clocks do seu processador podem rodar em uma frequência superior (ou inferior)  à implementada. <br>
 > Logo, é necessário adequá-la para seu computador. <br>

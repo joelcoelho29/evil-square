@@ -1,5 +1,5 @@
 ;********************************************************
-;                    ORDEM DO CÓDIGO
+;                   (ORDEM DO CÓDIGO)
 ;********************************************************
 
 ; 1) Inicialização
@@ -19,7 +19,7 @@
 
 
 ;********************************************************
-;                DECLARAÇÃO DE VARIÁVEIS
+;               (DECLARAÇÃO DE VARIÁVEIS)
 ;********************************************************	
 
 ;Variáveis de posição
@@ -72,7 +72,7 @@ MOVE_HORIZONTAL: var #1
 
 
 ;********************************************************
-;                       MAIN
+;                       (MAIN)
 ;********************************************************	
 main:
 	loadn r0, #40
@@ -100,7 +100,7 @@ main:
 
 
 ;********************************************************
-;                       MENU
+;                       (MENU)
 ;********************************************************	
 menu:
 	push r1
@@ -128,7 +128,7 @@ menu:
 
 
 ;********************************************************
-;              INICIALIZAÇÃO DE VARIÁVEIS
+;              (INICIALIZAÇÃO DE VARIÁVEIS)
 ;********************************************************		
 InitializeVariables:
 	push r0
@@ -148,12 +148,12 @@ InitializeVariables:
 	store positionEvilSquare3, r0					; Guarda posição EvilSquare3
 	store positionPreviousEvilSquare3, r0
 	
-	loadn r0, #321
+	loadn r0, #1080
 	store positionEvilSquare4, r0					; Guarda posição EvilSquare4
 	store positionPreviousEvilSquare4, r0
 	
-	loadn r0, #359
-	store positionEvilSquare5, r0					; Guarda posição EvilSquare4
+	loadn r0, #1118
+	store positionEvilSquare5, r0					; Guarda posição EvilSquare5
 	store positionPreviousEvilSquare5, r0
 	
 	pop r0
@@ -163,7 +163,7 @@ InitializeVariables:
 
 
 ;********************************************************
-;                    	LEVEL UP
+;                    	(LEVEL UP)
 ;********************************************************	
 LevelUp:
 	push r0
@@ -175,8 +175,7 @@ LevelUp:
 	jeq Level1
 	
 	load r0, Level									; Salva o valor do Level no R0
-	loadn r2, #1									; Atualiza a variavel Level
-	add r0, r0, r2
+	inc r0											; Atualiza a variável Level
 	store Level, r0
 	
 	loadn r1, #6
@@ -210,7 +209,7 @@ LevelUp:
 
 
 ;********************************************************
-;                  TRANSIÇÃO DO LEVEL UP
+;                  (TRANSIÇÃO DO LEVEL UP)
 ;********************************************************
 LevelUpTransition:
 	push r1
@@ -236,9 +235,54 @@ LevelUpTransition:
 
 ;--------------------------------------------------------
 
+;********************************************************
+;                        (LEVELS)
+;********************************************************	
+Level1:
+	call MovementEvilSquare2
+	call MovementGoodSquare
+	call Delay
+	jmp Level1
+
+Level2:
+	call MovementEvilSquare3
+	call MovementEvilSquare4
+	call MovementGoodSquare
+	call Delay
+	jmp Level2
+
+Level3:
+	call MovementEvilSquare2
+	call MovementEvilSquare3
+	call MovementEvilSquare4
+	call MovementGoodSquare
+	call Delay
+	jmp Level3
+
+Level4:
+	call MovementEvilSquare1
+	call MovementEvilSquare3
+	call MovementEvilSquare4
+	call MovementEvilSquare5
+	call MovementGoodSquare
+	call Delay
+	jmp Level4
+
+Level5:
+	call MovementEvilSquare1
+	call MovementEvilSquare2
+	call MovementEvilSquare3
+	call MovementEvilSquare4
+	call MovementEvilSquare5
+	call MovementGoodSquare
+	call Delay
+	jmp Level5
+
+;--------------------------------------------------------
+
 
 ;********************************************************
-;                 ESTRELAS DO LEVEL UP
+;                 (ESTRELAS DO FIM)
 ;********************************************************	
 Win:
 	push r0
@@ -291,53 +335,7 @@ Win:
 
 
 ;********************************************************
-;                        LEVELS
-;********************************************************	
-Level1:
-	call MovementEvilSquare2
-	call MovementGoodSquare
-	call Delay
-	jmp Level1
-
-Level2:
-	call MovementEvilSquare1
-	call MovementEvilSquare3
-	call MovementGoodSquare
-	call Delay
-	jmp Level2
-
-Level3:
-	call MovementEvilSquare1
-	call MovementEvilSquare2
-	call MovementEvilSquare3
-	call MovementGoodSquare
-	call Delay
-	jmp Level3
-
-Level4:
-	call MovementEvilSquare1
-	call MovementEvilSquare3
-	call MovementEvilSquare4
-	call MovementEvilSquare5
-	call MovementGoodSquare
-	call Delay
-	jmp Level4
-
-Level5:
-	call MovementEvilSquare1
-	call MovementEvilSquare2
-	call MovementEvilSquare3
-	call MovementEvilSquare4
-	call MovementEvilSquare5
-	call MovementGoodSquare
-	call Delay
-	jmp Level5
-
-;--------------------------------------------------------
-
-
-;********************************************************
-;                 MOVIMENTAÇÃO DO GOOD SQUARE
+;                 (MOVIMENTAÇÃO DO GOOD SQUARE)
 ;********************************************************	
 MovementGoodSquare:
 	push r0
@@ -369,7 +367,7 @@ MovementGoodSquare:
 
 
 ;********************************************************
-;                CALCULA POSIÇÃO DO GOOD SQUARE
+;                (CALCULA POSIÇÃO DO GOOD SQUARE)
 ;********************************************************	
 MovementGoodSquare_RECALC:							; Recalcula posicao do GoodSquare em funcao das Teclas pressionadas
 	push r0
@@ -397,7 +395,7 @@ MovementGoodSquare_RECALC:							; Recalcula posicao do GoodSquare em funcao das
 	jeq MovementGoodSquare_RECALC_S
 	
 	
-  MovementGoodSquare_RECALC_END:					; Se não foi inserido nenhuma tecla, retorna para a função de movimentação geral do GoodSquare
+  	MovementGoodSquare_RECALC_END:					; Se não foi inserido nenhuma tecla, retorna para a função de movimentação geral do GoodSquare
 	store positionGoodSquare, r0
 	pop r3
 	pop r2
@@ -405,47 +403,47 @@ MovementGoodSquare_RECALC:							; Recalcula posicao do GoodSquare em funcao das
 	pop r0
 	rts
 
-  MovementGoodSquare_RECALC_A:						; Move GoodSquare para Esquerda
-	loadn r1, #40
-	loadn r2, #0
-	mod r1, r0, r1									; Testa condicoes de Contorno 
-	cmp r1, r2
-	jeq MovementGoodSquare_RECALC_END
-	dec r0											; pos = pos -1
-	jmp MovementGoodSquare_RECALC_END
+  	MovementGoodSquare_RECALC_A:						; Move GoodSquare para Esquerda
+		loadn r1, #40
+		loadn r2, #0
+		mod r1, r0, r1									; Testa condicoes de Contorno 
+		cmp r1, r2
+		jeq MovementGoodSquare_RECALC_END
+		dec r0											; pos = pos -1
+		jmp MovementGoodSquare_RECALC_END
 		
-  MovementGoodSquare_RECALC_D:						; Move GoodSquare para Direita	
-	loadn r1, #40
-	loadn r2, #39
-	mod r1, r0, r1									; Testa condicoes de Contorno 
-	cmp r1, r2
-	jeq MovementGoodSquare_RECALC_END
-	inc r0											; pos = pos + 1
-	jmp MovementGoodSquare_RECALC_END
+  	MovementGoodSquare_RECALC_D:						; Move GoodSquare para Direita	
+		loadn r1, #40
+		loadn r2, #39
+		mod r1, r0, r1									; Testa condicoes de Contorno 
+		cmp r1, r2
+		jeq MovementGoodSquare_RECALC_END
+		inc r0											; pos = pos + 1
+		jmp MovementGoodSquare_RECALC_END
 	
-  MovementGoodSquare_RECALC_W:						; Move GoodSquare para Cima
-	loadn r1, #40
-	cmp r0, r1										; Testa condicoes de Contorno 
-	jle MovementGoodSquare_RECALC_END
-	sub r0, r0, r1									; pos = pos - 40
-	jmp MovementGoodSquare_RECALC_END
+  	MovementGoodSquare_RECALC_W:						; Move GoodSquare para Cima
+		loadn r1, #40
+		cmp r0, r1										; Testa condicoes de Contorno 
+		jle MovementGoodSquare_RECALC_END
+		sub r0, r0, r1									; pos = pos - 40
+		jmp MovementGoodSquare_RECALC_END
 
-  MovementGoodSquare_RECALC_S:						; Move GoodSquare para Baixo
-	loadn r1, #1159
-	cmp r0, r1										; Testa condicoes de Contorno 
-	jgr MovementGoodSquare_RECALC_END
-	loadn r2, #1079
-	cmp r0, r2										; Testa condicoes de Contorno
-	jgr MovementGoodSquare_RECALC_END
-	loadn r1, #40
-	add r0, r0, r1									; pos = pos + 40
-	jmp MovementGoodSquare_RECALC_END
+  	MovementGoodSquare_RECALC_S:						; Move GoodSquare para Baixo
+		loadn r1, #1159
+		cmp r0, r1										; Testa condicoes de Contorno 
+		jgr MovementGoodSquare_RECALC_END
+		loadn r2, #1079
+		cmp r0, r2										; Testa condicoes de Contorno
+		jgr MovementGoodSquare_RECALC_END
+		loadn r1, #40
+		add r0, r0, r1									; pos = pos + 40
+		jmp MovementGoodSquare_RECALC_END
 
 ;--------------------------------------------------------
 
 
 ;********************************************************
-;               MOVIMENTAÇÃO DO EVIL SQUARE 1
+;               (MOVIMENTAÇÃO DO EVIL SQUARE 1)
 ;********************************************************	
 MovementEvilSquare1:
 	push r0
@@ -671,7 +669,7 @@ MovementEvilSquare1:
 
 
 ;********************************************************
-;               MOVIMENTAÇÃO DO EVIL SQUARE 2
+;               (MOVIMENTAÇÃO DO EVIL SQUARE 2)
 ;********************************************************	
 
 MovementEvilSquare2:
@@ -898,7 +896,7 @@ MovementEvilSquare2:
 
 
 ;********************************************************
-;               MOVIMENTAÇÃO DO EVIL SQUARE 3
+;               (MOVIMENTAÇÃO DO EVIL SQUARE 3)
 ;********************************************************	
 
 
@@ -1126,7 +1124,7 @@ MovementEvilSquare3:
 ;--------------------------------------------------------
 
 ;********************************************************
-;               MOVIMENTAÇÃO DO EVIL SQUARE 4
+;               (MOVIMENTAÇÃO DO EVIL SQUARE 4)
 ;********************************************************	
 
 
@@ -1354,7 +1352,7 @@ MovementEvilSquare4:
 ;--------------------------------------------------------
 
 ;********************************************************
-;               MOVIMENTAÇÃO DO EVIL SQUARE 5
+;               (MOVIMENTAÇÃO DO EVIL SQUARE 5)
 ;********************************************************	
 
 
@@ -1582,7 +1580,7 @@ MovementEvilSquare5:
 ;--------------------------------------------------------
 
 ;********************************************************
-;                    DESENHA GOOD SQUARE
+;                    (DESENHA GOOD SQUARE)
 ;********************************************************		
 DrawGoodSquare:										; Desenha caractere do GoodSquare
 	push r0
@@ -1601,7 +1599,7 @@ DrawGoodSquare:										; Desenha caractere do GoodSquare
 
 
 ;********************************************************
-;           DELETA POSIÇÃO ANTERIOR DO GOOD SQUARE
+;           (DELETA POSIÇÃO ANTERIOR DO GOOD SQUARE)
 ;********************************************************	
 DeletePreviousGoodSquareDraw:						; Apaga o GoodSquare preservando o Cenario!
 	push r0
@@ -1637,7 +1635,7 @@ DeletePreviousGoodSquareDraw:						; Apaga o GoodSquare preservando o Cenario!
 	
 
 ;********************************************************
-;          DELETA POSIÇÃO ANTERIOR DO EVIL SQUARE 
+;          (DELETA POSIÇÃO ANTERIOR DO EVIL SQUARE)
 ;********************************************************	
 DeletePreviousEvilSquareDraw:						; Apaga o EvilSquare preservando o Cenario
 	push r1
@@ -1669,7 +1667,7 @@ DeletePreviousEvilSquareDraw:						; Apaga o EvilSquare preservando o Cenario
 
 
 ;********************************************************
-;                       GAME OVER
+;                      (GAME OVER)
 ;********************************************************	
 GameOver:
 	push r1
@@ -1712,7 +1710,7 @@ GameOver:
 
 
 ;********************************************************
-;                       END GAME
+;                       (END GAME)
 ;********************************************************
 EndGame:
 	push r0
@@ -1741,12 +1739,13 @@ EndGame:
 	pop r1
 	pop r0
 	halt
+	rts
 
 ;--------------------------------------------------------
 
 
 ;********************************************************
-;                   INPUT NICKNAME
+;                   (INPUT NICKNAME)
 ;********************************************************
 InputNickname:										
 	push r0											
@@ -1801,26 +1800,20 @@ InputNickname:
 
 
 ;********************************************************
-;                   DIGITE UMA LETRA
+;                   (DIGITE UMA LETRA)
 ;********************************************************
 InputLetter:										; Espera que uma tecla seja digitada e salva na variavel global "Letter"
 	push r0
 	push r1
-	push r2
 	loadn r1, #255									; Se nao digitar nada vem 255
-	loadn r2, #0									
 
     InputLetter_Loop:
 		inchar r0									; Le o teclado, se nada for digitado = 255
 		cmp r0, r1									; compara r0 com 255
 		jeq InputLetter_Loop						; Fica lendo até que digite uma tecla valida
 
-		cmp r0, r2									; compara r0 com 0
-		jeq InputLetter_Loop						
-
 	store Letter, r0								; Salva a tecla na variavel global "Letter"
 	
-	pop r2
 	pop r1
 	pop r0
 	rts
@@ -1829,7 +1822,7 @@ InputLetter:										; Espera que uma tecla seja digitada e salva na variavel g
 
 
 ;********************************************************
-;                     VERIFICA OPCAO
+;                     (VERIFICA OPCAO)
 ;********************************************************
 CheckOption:										; Espera que uma tecla seja digitada e salva na variavel global "Option"
 	push r0
@@ -1850,7 +1843,7 @@ CheckOption:										; Espera que uma tecla seja digitada e salva na variavel g
 
 
 ;********************************************************
-;                   IMPRIME STRING
+;                   (IMPRIME STRING)
 ;********************************************************	
 PrintString:										;  Rotina de Impresao de Mensagens:    r0 = Posicao da tela que o primeiro caractere da mensagem sera' impresso;  r1 = endereco onde comeca a mensagem; r2 = cor da mensagem.   Obs: a mensagem sera' impressa ate' encontrar "/0"
 	push r0											
@@ -1883,7 +1876,7 @@ PrintString:										;  Rotina de Impresao de Mensagens:    r0 = Posicao da tel
 
 
 ;********************************************************
-;                   IMPRIME STRING2
+;                   (IMPRIME STRING2)
 ;********************************************************	
 PrintString2:										;  Rotina de Impresao de Mensagens:    r0 = Posicao da tela que o primeiro caractere da mensagem sera' impresso;  r1 = endereco onde comeca a mensagem; r2 = cor da mensagem.   Obs: a mensagem sera' impressa ate' encontrar "/0"
 	push r0											
@@ -1898,7 +1891,7 @@ PrintString2:										;  Rotina de Impresao de Mensagens:    r0 = Posicao da te
 	loadn r3, #'\0'									; Criterio de parada
 	loadn r5, #' '									; Espaco em Branco
 
-   PrintString2_Loop:	
+   	PrintString2_Loop:	
 		loadi r4, r1
 		cmp r4, r3									; If (Char == \0)  vai Embora
 		jeq PrintString2_Exit
@@ -1907,13 +1900,13 @@ PrintString2:										;  Rotina de Impresao de Mensagens:    r0 = Posicao da te
 		add r4, r2, r4								; Soma a Cor
 		outchar r4, r0								; Imprime o caractere na tela
    		storei r6, r4
-   PrintString2_Skip:
+   	PrintString2_Skip:
 		inc r0										; Incrementa a posicao na tela
 		inc r1										; Incrementa o ponteiro da String
 		inc r6
 		jmp PrintString2_Loop
 	
-   PrintString2_Exit:	
+   	PrintString2_Exit:	
 	pop r6											; Resgata os valores dos registradores utilizados na Subrotina da Pilha
 	pop r5
 	pop r4
@@ -1927,7 +1920,7 @@ PrintString2:										;  Rotina de Impresao de Mensagens:    r0 = Posicao da te
 
 
 ;********************************************************
-;                       APAGA TELA
+;                      (APAGA TELA)
 ;********************************************************
 EraseScreen:
 	push r0
@@ -1949,45 +1942,11 @@ EraseScreen:
 
 
 ;********************************************************
-;                       IMPRIME TELA
-;********************************************************	
-PrintScreen:		  		  
-	push r0											
-	push r1											
-	push r2											
-	push r3											
-	push r4											
-	push r5											
-
-	loadn r0, #0  									; posicao inicial tem que ser o comeco da tela!
-	loadn r3, #40  									; Incremento da posicao da tela!
-	loadn r4, #41  									; incremento do ponteiro das linhas da tela
-	loadn r5, #1200 								; Limite da tela!
-	
-   PrintScreen_Loop:
-		call PrintString
-		add r0, r0, r3  							; incrementa posicao para a segunda linha na tela -->  r0 = R0 + 40
-		add r1, r1, r4  							; incrementa o ponteiro para o comeco da proxima linha na memoria (40 + 1 porcausa do /0 !!) --> r1 = r1 + 41
-		cmp r0, r5									; Compara r0 com 1200
-		jne PrintScreen_Loop						; Enquanto r0 < 1200
-
-	pop r5											; Resgata os valores dos registradores utilizados na Subrotina da Pilha
-	pop r4
-	pop r3
-	pop r2
-	pop r1
-	pop r0
-	rts
-				
-;--------------------------------------------------------
-
-;********************************************************
-;         IMPRIME TELA2 (DESENHA O CENÁRIO PRINCIAL)
+;            (DESENHA O CENÁRIO PRINCIPAL)
 ;********************************************************	
 PrintScreenScenery: 								;  Rotina de Impresao de Cenario na Tela Inteira
 	push r0											
 	push r1											
-	push r2											
 	push r3											
 	push r4											
 	push r5											
@@ -2011,7 +1970,6 @@ PrintScreenScenery: 								;  Rotina de Impresao de Cenario na Tela Inteira
 	pop r5
 	pop r4
 	pop r3
-	pop r2
 	pop r1
 	pop r0
 	rts
@@ -2019,12 +1977,11 @@ PrintScreenScenery: 								;  Rotina de Impresao de Cenario na Tela Inteira
 ;--------------------------------------------------------
 
 ;********************************************************
-;          IMPRIME TELA3 (DESENHA O MENU)
+;                    (DESENHA O MENU)
 ;********************************************************	
 PrintScreenMenu: 									;  Rotina de Impresao de Cenario na Tela Inteira
 	push r0											
 	push r1											
-	push r2											
 	push r3											
 	push r4											
 	push r5											
@@ -2048,19 +2005,17 @@ PrintScreenMenu: 									;  Rotina de Impresao de Cenario na Tela Inteira
 	pop r5
 	pop r4
 	pop r3
-	pop r2
 	pop r1
 	pop r0
 	rts
 ;--------------------------------------------------------
 
 ;********************************************************
-;          IMPRIME TELA4 (DESENHA A TELA DE LEVELUP)
+;             (DESENHA A TELA DE LEVELUP)
 ;********************************************************	
 PrintScreenLevelUp: 								;  Rotina de Impresao de Cenario na Tela Inteira
 	push r0											
 	push r1											
-	push r2											
 	push r3											
 	push r4											
 	push r5											
@@ -2084,19 +2039,17 @@ PrintScreenLevelUp: 								;  Rotina de Impresao de Cenario na Tela Inteira
 	pop r5
 	pop r4
 	pop r3
-	pop r2
 	pop r1
 	pop r0
 	rts
 ;--------------------------------------------------------
 
 ;********************************************************
-;          IMPRIME TELA5 (DESENHA A TELA DE WINGAME)
+;             (DESENHA A TELA DE WINGAME)
 ;********************************************************	
 PrintScreenWinGame: 								;  Rotina de Impresao de Cenario na Tela Inteira
 	push r0											
 	push r1											
-	push r2											
 	push r3											
 	push r4											
 	push r5											
@@ -2120,19 +2073,17 @@ PrintScreenWinGame: 								;  Rotina de Impresao de Cenario na Tela Inteira
 	pop r5
 	pop r4
 	pop r3
-	pop r2
 	pop r1
 	pop r0
 	rts
 ;--------------------------------------------------------
 
 ;********************************************************
-;          IMPRIME TELA6 (DESENHA A TELA DE GAMEOVER)
+;            (DESENHA A TELA DE GAME OVER)
 ;********************************************************	
 PrintScreenGameOver: 								;  Rotina de Impresao de Cenario na Tela Inteira
 	push r0											
 	push r1											
-	push r2											
 	push r3											
 	push r4											
 	push r5											
@@ -2156,19 +2107,17 @@ PrintScreenGameOver: 								;  Rotina de Impresao de Cenario na Tela Inteira
 	pop r5
 	pop r4
 	pop r3
-	pop r2
 	pop r1
 	pop r0
 	rts
 ;--------------------------------------------------------
 
 ;********************************************************
-;          IMPRIME TELA7 (DESENHA A TELA DE ENDGAME)
+;             (DESENHA A TELA DE ENDGAME)
 ;********************************************************	
 PrintScreenEndGame: 								;  Rotina de Impresao de Cenario na Tela Inteira
 	push r0											
 	push r1											
-	push r2											
 	push r3											
 	push r4											
 	push r5											
@@ -2192,14 +2141,13 @@ PrintScreenEndGame: 								;  Rotina de Impresao de Cenario na Tela Inteira
 	pop r5
 	pop r4
 	pop r3
-	pop r2
 	pop r1
 	pop r0
 	rts
 ;--------------------------------------------------------
 
 ;********************************************************
-;                       DESENHA CENÁRIO
+;                  (DESENHA CENÁRIO)
 ;********************************************************
 DrawScenery:
 	push r0
@@ -2261,7 +2209,7 @@ DrawScenery:
 
 
 ;********************************************************
-;                       DELAY
+;                       (DELAY)
 ;********************************************************		
 Delay:
 	push r0					   						
@@ -2269,14 +2217,14 @@ Delay:
 	
 	loadn r1, #1500  								; a
 	
-    Delay_volta2:									; Quebrou o contador acima em duas partes (dois loops de decremento)
-	loadn r0, #3000									; b
+    Delay_Back2:									; Quebrou o contador acima em duas partes (dois loops de decremento)
+		loadn r0, #3000								; b
 	
-    Delay_volta1: 
-	dec r0											; (4*a + 6)b = 1000000  == 1 seg  em um clock de 1MHz
-	jnz Delay_volta1	
-	dec r1
-	jnz Delay_volta2
+    Delay_Back1: 
+		dec r0										; (4*a + 6)b = 1000000  == 1 seg  em um clock de 1MHz
+		jnz Delay_Back1	
+		dec r1
+		jnz Delay_Back2
 	
 	pop r1
 	pop r0
@@ -2287,22 +2235,22 @@ Delay:
 
 
 ;********************************************************
-;             TIME DA ANIMAÇÃO DO LEVEL UP
+;             (TIME DA ANIMAÇÃO DO LEVEL UP)
 ;********************************************************		
 Time:
 	push r0											
 	push r1
 	
-	loadn r1, #1000   ; a
+	loadn r1, #1000   							; a
 	
-    Time_volta2:									; Quebrou o contador acima em duas partes (dois loops de decremento)
-	loadn r0, #6000	  ; b
+    Time_Back2:									; Quebrou o contador acima em duas partes (dois loops de decremento)
+		loadn r0, #6000	  						; b
 	
-    Time_volta1: 
-		dec r0										; (4*a + 6)b = 1000000  == 1 seg  em um clock de 1MHz
-		jnz Time_volta1	
+    Time_Back1: 
+		dec r0									; (4*a + 6)b = 1000000  == 1 seg  em um clock de 1MHz
+		jnz Time_Back1	
 		dec r1
-		jnz Time_volta2
+		jnz Time_Back2
 	
 	pop r1
 	pop r0
@@ -2312,7 +2260,7 @@ Time:
 
 
 ;********************************************************
-;                       TELAS
+;                       (TELAS)
 ;********************************************************	
 ; Tela Jogo
 Screen0Line0  : string "                                        "
